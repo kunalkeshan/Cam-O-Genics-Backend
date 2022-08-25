@@ -19,10 +19,12 @@
   "homepage": "https://github.com/kunalkeshan/Cam-O-Genics-Backend#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.5.3"
+    "mongoose": "^6.5.3",
+    "nodemailer": "^6.7.8"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
