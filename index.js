@@ -7,6 +7,7 @@
 // Dependencies
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 const appRouter = require('./routers');
 const { PORT, DB_URL } = require('./config');
 
@@ -15,7 +16,8 @@ const app = express();
 
 // Middlewares
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Use Application Router
 app.use(appRouter);
