@@ -25,7 +25,7 @@ app.use(appRouter);
 // Error Handlers
 
 // Connect DB and Start server
-mongoose.connect(DB_URL)
+mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((_) => {
         console.log(`Connected to MongoDB.`);
         app.listen(PORT, () => console.log(`Server running at PORT: ${PORT}`));
