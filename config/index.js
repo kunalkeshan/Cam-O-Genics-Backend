@@ -7,8 +7,7 @@ require('dotenv').config();
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const CURRENT_DB = isProduction ? 'CamOGenics' : 'test';
-const DB_URL = ``;
+const DB_URL = isProduction ? process.env.DB_URL_DEV : process.env.DB_URL_PROD;
 
 // Configuration Container
 const configuration = {
