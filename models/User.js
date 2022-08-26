@@ -38,7 +38,7 @@ const UserSchema = new Schema({
     },
     authRole: {
         type: String,
-        enum: ['ADMIN', 'PRESIDENT', 'SECRETARY',],
+        enum: ['ADMIN', 'PRESIDENT', 'SECRETARY'],
     },
     communityRoles: [{
         type: String,
