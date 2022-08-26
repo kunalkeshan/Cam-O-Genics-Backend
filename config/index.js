@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const DB_URL = isProduction ? process.env.DB_URL_DEV : process.env.DB_URL_PROD;
+const DB_URL = !isProduction ? process.env.DB_URL_DEV : process.env.DB_URL_PROD;
 
 const APP_REGEX = {
     COLLEGE_EMAIL: /^(([a-z]{2}[0-9]{4})(@srmist\.edu\.in))$/,
