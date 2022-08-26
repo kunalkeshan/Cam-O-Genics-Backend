@@ -30,3 +30,7 @@ Contributors who helped this project grow and improve!
 ## License
 
 This project is licensed under the [MIT License](/LICENSE).
+
+---
+
+If you found this Project 🤯! Leave a ⭐, it helps the project become more visible to others.
