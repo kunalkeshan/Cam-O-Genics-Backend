@@ -28,7 +28,7 @@ const initializeApp = async () => {
         // Create A single Club Document
         const ClubDocCount = await Club.countDocuments();
         if(ClubDocCount === 0) await Club.create({});
-        console.log('✨ App Initialized!')
+        console.log('✨ App Initialized!\n\n')
     } catch (_) {}
 }
 

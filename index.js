@@ -28,7 +28,7 @@ app.use(appRouter);
 
 // Error Handlers
 app.use((req, res, next) => {
-    const error = new ApiError({message: 'app/route-not-found', statusCode: 404});
+    const error = new ApiError({ message: 'app/route-not-found', statusCode: 404 });
     next(error);
 });
 app.use(errorHandler);
@@ -36,8 +36,8 @@ app.use(errorHandler);
 // Connect DB and Start server
 mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((_) => {
-        console.log(`Connected to MongoDB.`);
-        app.listen(PORT, () => console.log(`Server running at PORT: ${PORT}`));
+        console.log(`\n\n🗃️  Connected to MongoDB.`);
+        app.listen(PORT, () => console.log(`🚀 Server running at PORT: ${PORT}`));
         initializeApp();
     })
     .catch((err) => {
