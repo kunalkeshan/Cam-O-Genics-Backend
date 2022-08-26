@@ -4,7 +4,6 @@
 
 // Dependencies
 const nodemailer = require('nodemailer');
-const authMailer = require('./auth');
 const { MAIL_CONFIG } = require('../config');
 
 const transporter = nodemailer.createTransport({
@@ -17,10 +16,5 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// Mail Utility Container
-const mailUtil = {};
-
-mailUtil.auth = authMailer;
-
 // Export Util
-module.exports = { mailUtil, transporter };
+module.exports = transporter;
