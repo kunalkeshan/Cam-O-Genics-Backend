@@ -41,7 +41,7 @@ const UserSchema = new Schema({
         enum: ['ADMIN', 'PRESIDENT', 'SECRETARY', 'ALUMNI'],
     },
     communityRoles: [{
-        type: String,
+        type: [String],
         enum: ['PHOTOGRAPHER', 'GRAPHIC DESIGNER', 'VIDEO EDITOR'],
     }],
     links: {
