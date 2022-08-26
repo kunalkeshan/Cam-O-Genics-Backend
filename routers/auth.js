@@ -8,7 +8,7 @@ const authController = require('../controllers/auth');
 const authSchemas = require('../schemas/auth');
 const validateSchema = require('../middlewares/validator');
 
-Router.post('/signup/cog', authController.signupClubMember);
+Router.post('/signup/cog', validateSchema(authSchemas.signupClubMemberSchema), authController.signupClubMember);
 
 Router.post('/signup/cogc', authController.signupCommunityMember);
 
