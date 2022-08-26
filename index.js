@@ -8,6 +8,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const cors = require('cors');
 const appRouter = require('./routers');
 const { ApiError } = require('./utils/custom');
 const errorHandler = require('./middlewares/apiError');
@@ -19,6 +20,7 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Use Application Router
