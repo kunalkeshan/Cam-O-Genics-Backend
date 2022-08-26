@@ -14,6 +14,7 @@ const configuration = {
     isProduction,
     PORT: process.env.PORT,
     DB_URL,
+    JWT_SECRET: process.env.JWT_SECRET,
 };
 
 // Exporting Configuration
