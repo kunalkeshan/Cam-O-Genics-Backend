@@ -3,6 +3,7 @@
  */
 
 // Dependencies
+const Club = require("../models/Club");
 
 /**
  * @description ApiError class, returns error object with custom config
@@ -19,4 +20,16 @@ class ApiError extends Error {
     }
 };
 
-module.exports = { ApiError }
+/**
+ * @description Runs a set of function when the application is initialized.
+ */
+const initializeApp = async () => {
+    try {
+        // Create A single Club Document
+        const ClubDocCount = await Club.countDocuments();
+        if(ClubDocCount === 0) await Club.create({});
+        console.log('✨ App Initialized!')
+    } catch (_) {}
+}
+
+module.exports = { ApiError, initializeApp }

@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
 const appRouter = require('./routers');
-const { ApiError } = require('./utils/custom');
+const { ApiError, initializeApp } = require('./utils/custom');
 const errorHandler = require('./middlewares/apiError');
 const { PORT, DB_URL } = require('./config');
 
@@ -38,6 +38,7 @@ mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((_) => {
         console.log(`Connected to MongoDB.`);
         app.listen(PORT, () => console.log(`Server running at PORT: ${PORT}`));
+        initializeApp();
     })
     .catch((err) => {
         console.log(`Unable to connect to DB and start server: ${err}`);
