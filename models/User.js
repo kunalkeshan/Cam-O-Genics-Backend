@@ -70,7 +70,7 @@ const UserSchema = new Schema({
 
 // User Method and Statics
 
-UserSchema.virtual('token', function(){
+UserSchema.virtual('token').get(function(){
     const token = jwt.sign(this._id.toString(), JWT_SECRET);
     return token;
 })
