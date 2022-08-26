@@ -34,11 +34,11 @@ const UserSchema = new Schema({
     memberRole: {
         type: String,
         enum: ['COGC', 'COG'], // CamOGenics Community, CamOGenics Member
-        required: true, 
+        required: true,
     },
     authRole: {
         type: String,
-        enum: ['ADMIN', 'PRESIDENT', 'SECRETARY'],
+        enum: ['ADMIN', 'PRESIDENT', 'SECRETARY', 'ALUMNI'],
     },
     communityRoles: [{
         type: String,
@@ -70,17 +70,17 @@ const UserSchema = new Schema({
 
 // User Method and Statics
 
-UserSchema.virtual('token').get(function(){
-    const token = jwt.sign(this._id.toString(), JWT_SECRET);
+UserSchema.virtual('token').get(function () {
+    const token = jwt.sign(this._id.toString(), JWT_SECRET, { expiresIn: '1y' });
     return token;
-})
+});
 
-UserSchema.methods.generateHashedPassword = async function(){
+UserSchema.methods.generateHashedPassword = async function () {
     const SALT = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, SALT);
 };
 
-UserSchema.methods.generateDefaultAvatar = async function(){
+UserSchema.methods.generateDefaultAvatar = async function () {
     const fullName_spaceAdjusted = this.fullName.replace(/\W+/, '%20');
     this.defaultAvatar = `https://avatars.dicebear.com/api/initials/${fullName_spaceAdjusted}.svg`;
 };
@@ -92,15 +92,15 @@ UserSchema.methods.sanitize = function () {
 }
 
 // Hooks
-UserSchema.pre('save', async function(next){
+UserSchema.pre('save', async function (next) {
     try {
-        if(this.isModified('password')) {
+        if (this.isModified('password')) {
             await this.generateHashedPassword();
         }
-        if(this.isNew){
+        if (this.isNew) {
             await this.generateDefaultAvatar();
         }
-    } catch (_) {}
+    } catch (_) { }
     next();
 })
 
