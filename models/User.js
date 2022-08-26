@@ -31,12 +31,27 @@ const UserSchema = new Schema({
     defaultAvatar: String,
     avatar: String,
     address: String,
+    memberRole: {
+        type: String,
+        enum: ['COGC', 'COG'], // CamOGenics Community, CamOGenics Member
+        required: true, 
+    },
+    authRole: {
+        type: String,
+        enum: ['ADMIN', 'PRESIDENT', 'SECRETARY',],
+    },
+    communityRoles: [{
+        type: String,
+        enum: ['PHOTOGRAPHER', 'GRAPHIC DESIGNER', 'VIDEO EDITOR'],
+    }],
     links: {
         instagram: String,
         linkedIn: String,
         gitHub: String,
         youtube: String,
         twitter: String,
+        website: String,
+        blog: String,
         drivePhotos: String,
         behance: String,
         dribble: String,
