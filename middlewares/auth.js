@@ -24,7 +24,7 @@ const checkJwt = async (req, res, next) => {
     }
 };
 
-const checkRole = (ALLOWED_ROLES = []) => async (req, res, next) => {
+const checkAuthRole = (ALLOWED_ROLES = []) => async (req, res, next) => {
     try {
         if (!req.user && !req.token) throw new ApiError({ message: 'auth/user-token-invalid', statusCode: 401 });
         if (ALLOWED_ROLES.includes('*')) return next();
@@ -37,4 +37,4 @@ const checkRole = (ALLOWED_ROLES = []) => async (req, res, next) => {
 };
 
 // Exporting middlewares
-module.exports = { checkJwt, checkRole };
+module.exports = { checkJwt, checkAuthRole };
