@@ -9,6 +9,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const appRouter = require('./routers');
+const { ApiError } = require('./utils/custom');
+const errorHandler = require('./middlewares/apiError');
 const { PORT, DB_URL } = require('./config');
 
 // Application
@@ -23,6 +25,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(appRouter);
 
 // Error Handlers
+app.use((req, res, next) => {
+    const error = new ApiError({message: 'app/route-not-found', statusCode: 404});
+    next(error);
+});
+app.use(errorHandler);
 
 // Connect DB and Start server
 mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
