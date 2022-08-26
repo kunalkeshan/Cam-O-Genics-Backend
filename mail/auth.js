@@ -24,7 +24,8 @@ authMailer.sendClubMemberSignup = async ({ name, email }) => {
 
             const mailOptions = {
                 to: email,
-                subject: 'Welcome to the Cam O Genics Community!'
+                subject: 'Welcome to the Cam O Genics Community!',
+                html: html,
             }
 
             transporter.sendMail(mailOptions, (error, info) => {
