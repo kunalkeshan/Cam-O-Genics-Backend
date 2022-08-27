@@ -18,8 +18,10 @@ const authMailer = {};
 
 authMailer.sendClubMemberSignup = async ({ name, email }) => {
     return new Promise((resolve, reject) => {
-        fs.readFile(TEMPLATES_PATH.CLUB_MEMBER_SIGNUP, (err, html) => {
-            if (err && !html) return reject(err);
+        fs.readFile(TEMPLATES_PATH.CLUB_MEMBER_SIGNUP, (err, data) => {
+            if (err && !data) return reject(err);
+
+            const html = data.toString();
             html.replace('{ NAME }', name);
 
             const mailOptions = {
