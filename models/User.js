@@ -80,12 +80,17 @@ UserSchema.methods.generateHashedPassword = async function () {
     this.password = await bcrypt.hash(this.password, SALT);
 };
 
+UserSchema.methods.compareHashedPassword = async function (password) {
+    const isValidPassword = await bcrypt.compare(password, this.password);
+    return isValidPassword;
+}
+
 UserSchema.methods.generateDefaultAvatar = async function () {
     const fullName_spaceAdjusted = this.fullName.replace(/\W+/, '%20');
     this.defaultAvatar = `https://avatars.dicebear.com/api/initials/${fullName_spaceAdjusted}.svg`;
 };
 
-UserSchema.methods.sanitize = function () {
+UserSchema.methods.sanitize = async function () {
     const user = this.toJSON();
     delete user.password;
     return user;
