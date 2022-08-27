@@ -23,9 +23,9 @@ There's two separate guidelines for how to contribute to this project. If you're
 - `CONTRIBUTING.md`
 - Or any documentation related file.
 
-Refer to the [Basic Contributing Guidelines]. This will go over how to easily make changes without having to upload any files locally.
+Refer to the [Basic Contributing Guidelines](#basic-contributing-guidelines). This will go over how to easily make changes without having to upload any files locally.
 
-If you're looking for making features changes, or improving a certain part of the code, please refer to the [Advanced Contributing Guidelines].
+If you're looking for making features changes, or improving a certain part of the code, please refer to the [Advanced Contributing Guidelines](#advanced-contributing-guidelines).
 
 ## Standards and Guidelines
 
