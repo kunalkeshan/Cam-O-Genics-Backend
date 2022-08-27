@@ -20,8 +20,8 @@ OtpContainer.genOtp = async (userId = '', length = 4) => {
     otp = Math.floor(Math.random() * LENGTH);
     temp = otp;
     while (temp > 0) {
+        console.log('here', temp, otp);
         count++;
-        temp = Math.ceil(temp / 10);
     };
     if (count !== length) {
         LENGTH = Math.ceil((LENGTH / 10) + (Math.random() * length))
@@ -40,10 +40,10 @@ OtpContainer.genOtp = async (userId = '', length = 4) => {
 
 OtpContainer.verifyOtp = async (userId = '', otp = '') => {
     const CACHE = cogcCache.get(userId);
-    if (!CACHE) throw new ApiError({message: 'auth/otp-expired', statusCode: 401});
+    if (!CACHE) throw new ApiError({ message: 'auth/otp-expired', statusCode: 401 });
     const isValidOtp = CACHE.includes(otp);
     if (isValidOtp) return true;
-    else throw new ApiError({message: 'auth/otp-invalid', statusCode: 401});
+    else throw new ApiError({ message: 'auth/otp-invalid', statusCode: 401 });
 };
 
 module.exports = OtpContainer;
