@@ -11,6 +11,8 @@
 
 ## About
 
+Cam O Genics is the Photography and film Society of SRM IST Ramapuram. This project is the API implementation for the [Cam O Genics Native Application](/) that allows its community members to view and manage events, their members, and be updated with the club activity.
+
 ## Features
 
 ## Endpoints Documentation
