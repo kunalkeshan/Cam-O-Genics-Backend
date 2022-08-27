@@ -13,6 +13,8 @@ const APP_REGEX = {
     COLLEGE_EMAIL: /^(([a-z]{2}[0-9]{4})(@srmist\.edu\.in))$/,
     COGID: /^(COG)[0-9]{6}$/,
     PASSWORD: /^[a-zA-z0-9]{6,}$/,
+    RAMAPURAM_ENGINEERING_REGISTER_NO: '',
+    FORGOT_PASSWORD_OTP_FORMAT: /^[0-9]{4,}$/,
 }
 
 // Configuration Container

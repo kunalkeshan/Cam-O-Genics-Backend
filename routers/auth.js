@@ -14,5 +14,11 @@ Router.post('/signup/cogc', authController.signupCommunityMember);
 
 Router.post('/login', validateSchema('body', authSchemas.loginUserSchema), authController.loginUser);
 
+Router.post('/forgot-password', validateSchema(authSchemas.forgotPasswordSchema), authController.forgotPassword);
+
+Router.post('/verify-otp', validateSchema(authSchemas.verifyOtpSchema), authController.verifyOtp);
+
+Router.post('/reset-password', authController.resetPassword);
+
 // Exporting Router
 module.exports = Router;

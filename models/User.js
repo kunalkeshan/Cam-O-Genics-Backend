@@ -83,7 +83,7 @@ UserSchema.methods.generateHashedPassword = async function () {
 UserSchema.methods.compareHashedPassword = async function (password) {
     const isValidPassword = await bcrypt.compare(password, this.password);
     return isValidPassword;
-}
+};
 
 UserSchema.methods.generateDefaultAvatar = async function () {
     const fullName_spaceAdjusted = this.fullName.replace(/\W+/, '%20');
