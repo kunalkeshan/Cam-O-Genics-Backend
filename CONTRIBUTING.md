@@ -13,7 +13,7 @@
 
 ## Getting Started
 
-When contributing to the **Cam O Genics Backend* project, it's good to know our best practices, tips and tricks. This is purely a backend project, and is built with `JavaScript` and runs on `Node.js`. Uses `MongoDB` to store data and `Mongoose` to access them.
+When contributing to the **Cam O Genics Backend* project, it's good to know our best practices, tips and tricks. This is purely a backend project, and is built with `JavaScript` and runs on `Node.js`. Uses `MongoDB` to store data and `Mongoose ODM` to access them.
 
 ## How to Contribute?
 
