@@ -59,6 +59,7 @@ const UserSchema = new Schema({
 }, {
     timestamps: true,
     strict: true,
+    skipVersioning: true,
     toJSON: {
         virtuals: true,
     },
@@ -71,7 +72,7 @@ const UserSchema = new Schema({
 // User Method and Statics
 
 UserSchema.virtual('token').get(function () {
-    const token = jwt.sign(this._id.toString(), JWT_SECRET, { expiresIn: '1y' });
+    const token = jwt.sign(this._id.toString(), JWT_SECRET);
     return token;
 });
 

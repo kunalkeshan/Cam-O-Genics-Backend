@@ -4,37 +4,39 @@
 
 // Dependencies
 const transporter = require('./setup');
-const fs = require('fs');
 const path = require('path');
+const { mjml2HTMLParser } = require('@wavychat/mjml-parser');
 
 const TEMPLATES_PATH = {
-    CLUB_MEMBER_SIGNUP: path.join(__dirname, 'templates/auth', 'club-member-signup.html'),
-    COMMUNITY_MEMBER_SIGNUP: path.join(__dirname, 'templates/auth', 'community-member-signup.html'),
-    FORGOT_PASSWORD: path.join(__dirname, 'templates/auth', 'forgot-password.html'),
+    CLUB_MEMBER_SIGNUP: path.join(__dirname, 'mjml/auth', 'club-member-signup.mjml'),
+    COMMUNITY_MEMBER_SIGNUP: path.join(__dirname, 'mjml/auth', 'community-member-signup.mjml'),
+    FORGOT_PASSWORD: path.join(__dirname, 'mjml/auth', 'forgot-password.mjml'),
 }
 
 // Auth Mailer Container
 const authMailer = {};
 
-authMailer.sendClubMemberSignup = async ({ name, email }) => {
+authMailer.sendClubMemberSignup = async ({ fullName, officialEmail }) => {
+    const html = await mjml2HTMLParser({
+        mjml: {
+            path: TEMPLATES_PATH.CLUB_MEMBER_SIGNUP
+        },
+        template: {
+            engine: "handlebars",
+            vars: { fullName }
+        }
+    })
     return new Promise((resolve, reject) => {
-        fs.readFile(TEMPLATES_PATH.CLUB_MEMBER_SIGNUP, (err, data) => {
-            if (err && !data) return reject(err);
-
-            const html = data.toString();
-            html.replace('{ NAME }', name);
-
-            const mailOptions = {
-                to: email,
-                subject: 'Welcome to the Cam O Genics Community!',
-                html: html,
-            }
-
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error && !info) return resolve(error);
-                return resolve('Club member signup mail sent!')
-            })
-        });
+        const mailOptions = {
+            to: officialEmail,
+            subject: 'Welcome to the Cam O Genics Community!',
+            html: html,
+        }
+        // TODO: Logging for email errors required
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error && !info) return resolve(error);
+            return resolve('Club member signup mail sent!')
+        })
     });
 };
 

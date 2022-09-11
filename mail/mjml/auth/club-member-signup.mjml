@@ -1,0 +1,13 @@
+<mjml>
+	<mj-body>
+		<mj-section>
+			<mj-column>
+				<mj-text>
+					<h1>CamOGenics</h1>
+					<p>Hello, {{fullName}}!</p>
+					<p>Welcome to the Community</p>
+				</mj-text>
+			</mj-column>
+		</mj-section>
+	</mj-body>
+</mjml>
