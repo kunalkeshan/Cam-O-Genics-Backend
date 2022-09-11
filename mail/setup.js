@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
     auth: {
         user: MAIL_CONFIG.email,
         pass: MAIL_CONFIG.password,
-    }
+    },
 });
 
 // Export Util

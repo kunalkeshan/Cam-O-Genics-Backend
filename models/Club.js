@@ -21,7 +21,7 @@ const ClubSchema = new Schema({
         linkedIn: String,
         website: String,
         blog: String,
-    }
+    },
 }, {
     timestamps: true,
     skipVersioning: true,

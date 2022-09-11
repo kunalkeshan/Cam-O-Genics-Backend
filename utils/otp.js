@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /**
  * OTP Generator and Validator
  */
@@ -13,8 +14,8 @@ const OtpContainer = {};
 
 /**
  * @description generate an otp for a user, and saves it into cache.
- * @param {string} userId 
- * @param {number} length 
+ * @param {string} userId
+ * @param {number} length
  * @returns Promise<string>
  */
 OtpContainer.genOtp = async (userId = '', length = 4) => {
@@ -37,16 +38,15 @@ OtpContainer.genOtp = async (userId = '', length = 4) => {
     while (temp > 0) {
         count++;
         temp = Math.floor(temp / 10);
-    };
+    }
 
     // If length does not match, then adjust otp
     if (count !== length) {
-
         // Reduce length by 10 and add a new number to it
-        setLength = Math.ceil((setLength / 10) + (Math.random() * length))
+        setLength = Math.ceil((setLength / 10) + (Math.random() * length));
         // Add number set above with otp to adjust the lenth
-        otp = otp + setLength;
-    };
+        otp += setLength;
+    }
 
     // Convert otp to string
     otp = String(otp);
@@ -66,8 +66,8 @@ OtpContainer.genOtp = async (userId = '', length = 4) => {
 
 /**
  * Verify if otp exists in cache, if not throws an error if invalid or expired
- * @param {string} userId 
- * @param {string} otp 
+ * @param {string} userId
+ * @param {string} otp
  * @returns Promise<boolean>
  */
 OtpContainer.verifyOtp = async (userId = '', otp = '') => {
@@ -75,7 +75,7 @@ OtpContainer.verifyOtp = async (userId = '', otp = '') => {
     if (!CACHE) throw new ApiError({ message: 'auth/otp-expired', statusCode: 401 });
     const isValidOtp = CACHE.includes(otp);
     if (isValidOtp) return true;
-    else throw new ApiError({ message: 'auth/otp-invalid', statusCode: 401 });
+    throw new ApiError({ message: 'auth/otp-invalid', statusCode: 401 });
 };
 
 module.exports = OtpContainer;

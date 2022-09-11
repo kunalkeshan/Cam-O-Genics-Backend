@@ -3,7 +3,7 @@
  */
 
 // Dependencies
-const {Schema, model} = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 // Event Schema
 const EventSchema = new Schema({
@@ -28,7 +28,7 @@ const EventSchema = new Schema({
         type: String,
         enum: ['ONLINE', 'OFFLINE'],
         required: true,
-        
+
     },
     location: String,
     link: String,
@@ -39,7 +39,7 @@ const EventSchema = new Schema({
     endDate: {
         type: Date,
         required: true,
-    }
+    },
 }, {
     timestamps: true,
     skipVersioning: true,
