@@ -1,5 +1,9 @@
 # Cam O Genics Backend Application
 
+<p align="center">
+<img src="/public/images/gh-thumbnail-backend.jpg" alt="CamOGenics GitHub Backend Thumbnail" width="60%" height="auto" />
+</p>
+
 **Table of Contents**:
 
 - [About](#about)
