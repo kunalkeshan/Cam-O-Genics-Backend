@@ -53,6 +53,7 @@ OtpContainer.genOtp = async (userId = '', length = 4) => {
 
     // Set otp in cache
     CACHED = cogcCache.get(userId);
+    console.log(CACHED, 'GEN OTP');
     if (CACHED) {
         cogcCache.set(userId, CACHED.concat[otp], OTP_EXPIRE_DURATION);
     } else {
@@ -72,6 +73,7 @@ OtpContainer.genOtp = async (userId = '', length = 4) => {
  */
 OtpContainer.verifyOtp = async (userId = '', otp = '') => {
     const CACHE = cogcCache.get(userId);
+    console.log(CACHE, 'VERIFY OTP');
     if (!CACHE) throw new ApiError({ message: 'auth/otp-expired', statusCode: 401 });
     const isValidOtp = CACHE.includes(otp);
     if (isValidOtp) {

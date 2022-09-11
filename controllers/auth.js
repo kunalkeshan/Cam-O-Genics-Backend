@@ -63,12 +63,14 @@ AuthController.loginUser = async (req, res, next) => {
 AuthController.forgotPassword = async (req, res, next) => {
     const { user } = req.body;
     try {
-        const fpUser = await User.findOne({ $or: [{ officialEmail: user }, { cogcId: user }, { phone: user }] });
+        const fpUser = await User.findOne({ $or: [{ officialEmail: user }, { cogcId: user }, { phone: user }] }).lean();
         if (!fpUser) throw new ApiError({ message: 'auth/account-does-not-exist', statusCode: 404 });
 
         const otp = await otpUtil.genOtp(fpUser.id, 4);
         const TenMins = 1000 * 60 * 10;
         const expiresIn = Date.now() + TenMins;
+
+        authMailer.sendForgotPassword({ ...fpUser, otp });
 
         return res.status(200).json({
             message: 'auth/otp-session-live',
@@ -106,6 +108,8 @@ AuthController.resetPassword = async (req, res, next) => {
         const user = await User.findById(decoded);
         user.password = password;
         await user.save();
+
+        authMailer.sendPasswordChanged(user.toJSON());
 
         return res.status(200).json({
             message: 'auth/reset-password-successful',

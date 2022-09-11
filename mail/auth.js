@@ -43,9 +43,53 @@ authMailer.sendClubMemberSignup = async ({ fullName, officialEmail }) => {
 
 authMailer.sendCommunityMemberSignup = async () => { };
 
-authMailer.sendForgotPassword = async () => { };
+authMailer.sendForgotPassword = async ({ officialEmail, fullName, otp }) => {
+    const html = await mjml2HTMLParser({
+        mjml: {
+            path: TEMPLATES_PATH.FORGOT_PASSWORD,
+        },
+        template: {
+            engine: 'handlebars',
+            vars: { fullName, otp },
+        },
+    });
+    return new Promise((resolve) => {
+        const mailOptions = {
+            to: officialEmail,
+            subject: 'Enter OTP to Change Password | CamOGenics',
+            html,
+        };
+        // TODO: Logging for email errors required
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error && !info) { return resolve(error); }
+            return resolve('Forgot password with otp mail sent!');
+        });
+    });
+};
 
-authMailer.passwordChanged = async () => { };
+authMailer.sendPasswordChanged = async ({ officialEmail, fullName }) => {
+    const html = await mjml2HTMLParser({
+        mjml: {
+            path: TEMPLATES_PATH.PASSWORD_CHANGED,
+        },
+        template: {
+            engine: 'handlebars',
+            vars: { fullName },
+        },
+    });
+    return new Promise((resolve) => {
+        const mailOptions = {
+            to: officialEmail,
+            subject: 'Password Changed Successfully | CamOGenics',
+            html,
+        };
+        // TODO: Logging for email errors required
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error && !info) { return resolve(error); }
+            return resolve('Password changed successfully mail sent!');
+        });
+    });
+};
 
 // Export mailer
 module.exports = authMailer;
