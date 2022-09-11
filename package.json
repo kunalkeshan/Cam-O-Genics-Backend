@@ -33,6 +33,9 @@
     "nodemailer": "^6.7.8"
   },
   "devDependencies": {
+    "eslint": "^8.23.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
     "nodemon": "^2.0.19"
   }
 }

@@ -15,7 +15,7 @@ const APP_REGEX = {
     PASSWORD: /^[\w@./#&+-]{6,}$/,
     RAMAPURAM_ENGINEERING_REGISTER_NO: '',
     FORGOT_PASSWORD_OTP_FORMAT: /^[0-9]{4,}$/,
-}
+};
 
 // Configuration Container
 const configuration = {
@@ -27,7 +27,7 @@ const configuration = {
     MAIL_CONFIG: {
         email: process.env.MAIL_EMAIL,
         password: process.env.MAIL_PASSWORD,
-    }
+    },
 };
 
 // Exporting Configuration

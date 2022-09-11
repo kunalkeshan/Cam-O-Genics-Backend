@@ -3,7 +3,7 @@
  */
 
 // Dependencies
-const { Schema, model, version } = require('mongoose');
+const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config');
@@ -55,7 +55,7 @@ const UserSchema = new Schema({
         drivePhotos: String,
         behance: String,
         dribble: String,
-    }
+    },
 }, {
     timestamps: true,
     strict: true,
@@ -66,13 +66,12 @@ const UserSchema = new Schema({
     toObject: {
         virtuals: true,
     },
-    skipVersioning: true,
 });
 
 // User Method and Statics
 
 UserSchema.virtual('token').get(function () {
-    const token = jwt.sign(this._id.toString(), JWT_SECRET);
+    const token = jwt.sign(this.id, JWT_SECRET);
     return token;
 });
 
@@ -87,15 +86,15 @@ UserSchema.methods.compareHashedPassword = async function (password) {
 };
 
 UserSchema.methods.generateDefaultAvatar = async function () {
-    const fullName_spaceAdjusted = this.fullName.replace(/\W+/, '%20');
-    this.defaultAvatar = `https://avatars.dicebear.com/api/initials/${fullName_spaceAdjusted}.svg`;
+    const fullNameSpaceAdjusted = this.fullName.replace(/\W+/, '%20');
+    this.defaultAvatar = `https://avatars.dicebear.com/api/initials/${fullNameSpaceAdjusted}.svg`;
 };
 
 UserSchema.methods.sanitize = async function () {
     const user = this.toJSON();
     delete user.password;
     return user;
-}
+};
 
 // Hooks
 UserSchema.pre('save', async function (next) {
@@ -106,9 +105,10 @@ UserSchema.pre('save', async function (next) {
         if (this.isNew) {
             await this.generateDefaultAvatar();
         }
+        // eslint-disable-next-line
     } catch (_) { }
     next();
-})
+});
 
 // User Model
 const User = model('User', UserSchema);

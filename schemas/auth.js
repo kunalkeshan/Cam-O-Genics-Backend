@@ -28,7 +28,7 @@ AuthSchema.forgotPasswordSchema = Joi.object({
 });
 
 AuthSchema.verifyOtpSchema = Joi.object({
-    id: Joi.string().hex().length(24).required(), //mongodb id
+    id: Joi.string().hex().length(24).required(), // mongodb id
     otp: Joi.string().regex(APP_REGEX.FORGOT_PASSWORD_OTP_FORMAT).required(),
 });
 

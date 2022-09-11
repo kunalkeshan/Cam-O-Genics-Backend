@@ -24,8 +24,8 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.json({ message: 'Hello there!' })
-})
+    res.json({ message: 'Hello there!' });
+});
 
 // Use Application Router
 app.use(appRouter);
@@ -39,8 +39,8 @@ app.use(errorHandler);
 
 // Connect DB and Start server
 mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((_) => {
-        console.log(`\n\n🗃️  Connected to MongoDB.`);
+    .then(() => {
+        console.log('\n\n🗃️  Connected to MongoDB.');
         app.listen(PORT, () => console.log(`🚀 Server running at PORT: ${PORT}`));
         initializeApp();
     })
