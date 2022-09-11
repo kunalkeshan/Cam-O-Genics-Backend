@@ -11,6 +11,7 @@ const TEMPLATES_PATH = {
     CLUB_MEMBER_SIGNUP: path.join(__dirname, 'mjml/auth', 'club-member-signup.mjml'),
     COMMUNITY_MEMBER_SIGNUP: path.join(__dirname, 'mjml/auth', 'community-member-signup.mjml'),
     FORGOT_PASSWORD: path.join(__dirname, 'mjml/auth', 'forgot-password.mjml'),
+    PASSWORD_CHANGED: path.join(__dirname, 'mjml/auth', 'password-changed.mjml'),
 };
 
 // Auth Mailer Container
@@ -43,6 +44,8 @@ authMailer.sendClubMemberSignup = async ({ fullName, officialEmail }) => {
 authMailer.sendCommunityMemberSignup = async () => { };
 
 authMailer.sendForgotPassword = async () => { };
+
+authMailer.passwordChanged = async () => { };
 
 // Export mailer
 module.exports = authMailer;

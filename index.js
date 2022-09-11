@@ -33,8 +33,8 @@ app.use(appRouter);
 
 // Error Handlers
 app.use((req, res, next) => {
-    const error = new ApiError({ message: 'app/route-not-found', statusCode: 404 });
-    next(error);
+    const notFoundError = new ApiError({ message: 'app/route-not-found', statusCode: 404 });
+    next(notFoundError);
 });
 app.use(errorHandler);
 

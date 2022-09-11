@@ -10,7 +10,7 @@ const validateSchema = require('../middlewares/validator');
 
 Router.post('/signup/cog', validateSchema('body', authSchemas.signupClubMemberSchema), authController.signupClubMember);
 
-Router.post('/signup/cogc', authController.signupCommunityMember);
+// Router.post('/signup/cogc', authController.signupCommunityMember);
 
 Router.post('/login', validateSchema('body', authSchemas.loginUserSchema), authController.loginUser);
 
