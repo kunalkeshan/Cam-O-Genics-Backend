@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Cam O Genics Backend Application
  * Initialized On: 25th August 2022

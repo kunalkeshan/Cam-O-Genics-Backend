@@ -10,7 +10,8 @@ const { ApiError } = require('../utils/custom');
  * @description Express error handling middleware
  */
 const errorHandler = (err, req, res) => {
-    if (!isProduction) console.log(err);
+    // eslint-disable-next-line no-console
+    console.log(err);
     if (err instanceof ApiError) {
         return res.status(err.statusCode).json({
             message: err.message,

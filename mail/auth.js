@@ -34,7 +34,7 @@ authMailer.sendClubMemberSignup = async ({ fullName, officialEmail }) => {
         };
         // TODO: Logging for email errors required
         transporter.sendMail(mailOptions, (error, info) => {
-            if (error && !info) return resolve(error);
+            if (error && !info) { return resolve(error); }
             return resolve('Club member signup mail sent!');
         });
     });

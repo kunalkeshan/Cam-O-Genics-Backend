@@ -28,6 +28,7 @@ const initializeApp = async () => {
         // Create A single Club Document
         const ClubDocCount = await Club.countDocuments();
         if (ClubDocCount === 0) await Club.create({});
+        // eslint-disable-next-line no-console
         console.log('✨ App Initialized!\n\n');
         // eslint-disable-next-line no-empty
     } catch (_) { }
