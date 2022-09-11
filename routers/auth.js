@@ -18,7 +18,7 @@ Router.post('/forgot-password', validateSchema('body', authSchemas.forgotPasswor
 
 Router.post('/verify-otp', validateSchema('body', authSchemas.verifyOtpSchema), authController.verifyOtp);
 
-Router.post('/reset-password', authController.resetPassword);
+Router.post('/reset-password', validateSchema('body', authSchemas.resetPasswordSchema), authController.resetPassword);
 
 // Exporting Router
 module.exports = Router;

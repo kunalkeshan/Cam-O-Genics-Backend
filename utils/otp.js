@@ -7,7 +7,7 @@
 const cogcCache = require('./cache');
 const { ApiError } = require('./custom');
 
-const OTP_EXPIRE_DURATION = 600; // 10 mins
+const OTP_EXPIRE_DURATION = 6000; // 10 mins
 
 // OTP Container
 const OtpContainer = {};
@@ -74,7 +74,10 @@ OtpContainer.verifyOtp = async (userId = '', otp = '') => {
     const CACHE = cogcCache.get(userId);
     if (!CACHE) throw new ApiError({ message: 'auth/otp-expired', statusCode: 401 });
     const isValidOtp = CACHE.includes(otp);
-    if (isValidOtp) return true;
+    if (isValidOtp) {
+        cogcCache.del(userId);
+        return true;
+    }
     throw new ApiError({ message: 'auth/otp-invalid', statusCode: 401 });
 };
 
