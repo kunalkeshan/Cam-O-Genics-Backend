@@ -119,5 +119,9 @@ AuthController.resetPassword = async (req, res, next) => {
     }
 };
 
+// AuthController.addAuthRole = async (req, res, next) => {};
+
+// AuthController.deleteAuthRole = async (req, res, next) => {};
+
 // Exporting Controller
 module.exports = AuthController;
