@@ -22,21 +22,23 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 require('./utils/jobs');
-
-app.get('/', (req, res) => {
-    res.json({ message: 'Hello there!' });
-});
 
 // Use Application Router
 app.use(appRouter);
 
-// Error Handlers
-app.use((req, res, next) => {
-    const notFoundError = new ApiError({ message: 'app/route-not-found', statusCode: 404 });
+// API Error Handler
+app.use('/api', (req, res, next) => {
+    const notFoundError = new ApiError({ message: 'app/route-not-found', statusCode: 404, data: { method: req.method } });
     next(notFoundError);
 });
+
+app.use(express.static(path.resolve(__dirname, 'client/build')));
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client/build', 'index.html'));
+});
+
 app.use(errorHandler);
 
 // Connect DB and Start server
