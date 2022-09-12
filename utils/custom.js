@@ -43,8 +43,8 @@ function createDirectories() {
  */
 const initializeApp = async () => {
     try {
-        createClubDocument();
-        createDirectories();
+        await createClubDocument();
+        await createDirectories();
         // eslint-disable-next-line no-console
         console.log('✨ App Initialized!\n\n');
         // eslint-disable-next-line no-empty
