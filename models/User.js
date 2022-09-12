@@ -7,6 +7,7 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { format } = require('date-fns');
 const { JWT_SECRET } = require('../config');
 
 // User Schema
@@ -94,6 +95,8 @@ UserSchema.methods.generateDefaultAvatar = async function () {
 UserSchema.methods.sanitize = async function () {
     const user = this.toJSON();
     delete user.password;
+    user.createdAt = format(new Date(user.createdAt), 'PPP');
+    user.updatedAt = format(new Date(user.updatedAt), 'PPP');
     return user;
 };
 
