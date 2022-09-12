@@ -3,6 +3,8 @@
  */
 
 // Dependencies
+const fs = require('fs');
+const path = require('path');
 const Club = require('../models/Club');
 
 /**
@@ -20,14 +22,29 @@ class ApiError extends Error {
     }
 }
 
+async function createClubDocument() {
+    // Create A single Club Document
+    const ClubDocCount = await Club.countDocuments();
+    if (ClubDocCount === 0) await Club.create({});
+}
+
+function createDirectories() {
+    const DIRECTORIES = ['.data/otp'];
+    DIRECTORIES.forEach((dir) => {
+        const dirPath = path.join(__dirname, '..', dir);
+        if (!fs.existsSync(dirPath)) {
+            fs.mkdirSync(dirPath, { recursive: true });
+        }
+    });
+}
+
 /**
  * @description Runs a set of function when the application is initialized.
  */
 const initializeApp = async () => {
     try {
-        // Create A single Club Document
-        const ClubDocCount = await Club.countDocuments();
-        if (ClubDocCount === 0) await Club.create({});
+        createClubDocument();
+        createDirectories();
         // eslint-disable-next-line no-console
         console.log('✨ App Initialized!\n\n');
         // eslint-disable-next-line no-empty

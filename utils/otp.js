@@ -1,13 +1,17 @@
+/* eslint-disable func-names */
 /* eslint-disable no-plusplus */
 /**
  * OTP Generator and Validator
  */
 
 // Dependencies
-const cogcCache = require('./cache');
+const fs = require('fs');
+const path = require('path');
 const { ApiError } = require('./custom');
 
-const OTP_EXPIRE_DURATION = 6000; // 10 mins
+const OTP_EXPIRE_DURATION = 600000; // 10 mins
+
+const otpDataPath = (userId) => path.join(__dirname, '..', '.data/otp', `${userId}.json`);
 
 // OTP Container
 const OtpContainer = {};
@@ -21,6 +25,7 @@ const OtpContainer = {};
 OtpContainer.genOtp = async (userId = '', length = 4) => {
     // Initialize variables
     let [temp, count, setLength, otp, CACHED] = [length, 0, 1, 0, []];
+    const otpPath = otpDataPath(userId);
 
     // Set length of otp, for generation
     // If length = 3
@@ -52,14 +57,16 @@ OtpContainer.genOtp = async (userId = '', length = 4) => {
     otp = String(otp);
 
     // Set otp in cache
-    CACHED = cogcCache.get(userId);
-    console.log(CACHED, 'GEN OTP');
-    if (CACHED) {
-        cogcCache.set(userId, CACHED.concat[otp], OTP_EXPIRE_DURATION);
-    } else {
-        CACHED = [otp];
-        cogcCache.set(userId, CACHED, OTP_EXPIRE_DURATION);
-    }
+    fs.readFile(otpPath, 'utf8', (err, data) => {
+        if (!err && data) {
+            const otpData = JSON.parse(data);
+            otpData.push({ otp, expiresIn: Date.now() + OTP_EXPIRE_DURATION });
+            fs.writeFileSync(otpPath, JSON.stringify(otpData));
+        } else {
+            CACHED = [{ otp, expiresIn: Date.now() + OTP_EXPIRE_DURATION }];
+            fs.writeFileSync(otpPath, JSON.stringify(CACHED));
+        }
+    });
 
     // Return otp
     return otp;
@@ -72,15 +79,35 @@ OtpContainer.genOtp = async (userId = '', length = 4) => {
  * @returns Promise<boolean>
  */
 OtpContainer.verifyOtp = async (userId = '', otp = '') => {
-    const CACHE = cogcCache.get(userId);
-    console.log(CACHE, 'VERIFY OTP');
+    const CACHE = JSON.parse(fs.readFileSync(otpDataPath(userId), 'utf8'));
     if (!CACHE) throw new ApiError({ message: 'auth/otp-expired', statusCode: 401 });
-    const isValidOtp = CACHE.includes(otp);
+    const isValidOtp = CACHE.find((data) => data.otp === otp);
     if (isValidOtp) {
-        cogcCache.del(userId);
+        fs.unlinkSync(otpDataPath(userId));
         return true;
     }
     throw new ApiError({ message: 'auth/otp-invalid', statusCode: 401 });
+};
+
+OtpContainer.clearExpiredOtps = async function () {
+    fs.readdir(path.join(__dirname, '../.data/otp'), (err, files) => {
+        if (!err && files) {
+            files.forEach((file) => {
+                const filePath = path.join(__dirname, '../.data/otp', file);
+                fs.readFile(filePath, 'utf8', (error, data) => {
+                    if (!error && data) {
+                        let otps = JSON.parse(data);
+                        otps = otps.filter((otp) => Date.now() <= otp.expiresIn);
+                        if (otps.length === 0) {
+                            fs.unlinkSync(filePath);
+                        } else {
+                            fs.writeFileSync(filePath, JSON.stringify(otps));
+                        }
+                    }
+                });
+            });
+        }
+    });
 };
 
 module.exports = OtpContainer;

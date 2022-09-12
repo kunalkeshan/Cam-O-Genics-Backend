@@ -63,7 +63,7 @@ AuthController.loginUser = async (req, res, next) => {
 AuthController.forgotPassword = async (req, res, next) => {
     const { user } = req.body;
     try {
-        const fpUser = await User.findOne({ $or: [{ officialEmail: user }, { cogcId: user }, { phone: user }] }).lean();
+        const fpUser = await User.findOne({ $or: [{ officialEmail: user }, { cogcId: user }, { phone: user }] });
         if (!fpUser) throw new ApiError({ message: 'auth/account-does-not-exist', statusCode: 404 });
 
         const otp = await otpUtil.genOtp(fpUser.id, 4);
