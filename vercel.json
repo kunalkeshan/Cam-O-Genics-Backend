@@ -2,8 +2,6 @@
 	"version": 2,
 	"name": "camogenics-backend",
 	"builds": [{ "src": "index.js", "use": "@vercel/node" }],
-	"rewrites": [
-		{ "source": "/api/(.*)", "destination": "/api" },
-		{ "source": "/(.*)", "destination": "/" }
-	]
+	"routes": [{ "src": "/(.*)", "dest": "client/build/index.html" }],
+	"rewrites": [{ "source": "/api/(.*)", "destination": "/api" }]
 }
