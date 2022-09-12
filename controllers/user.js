@@ -88,5 +88,9 @@ UserController.updateCommunityIdentities = async (req, res, next) => {
     }
 };
 
+// UserController.addAuthRole = async (req, res, next) => {};
+
+// UserController.deleteAuthRole = async (req, res, next) => {};
+
 // Exporting Controller
 module.exports = UserController;
