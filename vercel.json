@@ -1,6 +1,7 @@
 {
 	"version": 2,
 	"name": "camogenics-backend-app",
+	"buildCommand": "npm run build",
 	"builds": [{ "src": "index.js", "use": "@vercel/node" }],
 	"routes": [{ "src": "/(.*)", "dest": "client/build/index.html" }],
 	"rewrites": [{ "source": "/api/(.*)", "destination": "/api" }]
