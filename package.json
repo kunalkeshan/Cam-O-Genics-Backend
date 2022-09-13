@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"install-all-deps": "npm i & cd client && npm i",
-		"start": "node index.js",
+		"start": "npm run build && node index.js",
 		"start:server": "nodemon index.js",
 		"start:client": "cd client && npm start",
 		"start:all": "concurrently \"npm run start:server\" \"npm run start:client\"",
@@ -34,6 +34,7 @@
 		"jsonwebtoken": "^8.5.1",
 		"mjml": "^4.13.0",
 		"mongoose": "^6.5.3",
+		"morgan": "^1.10.0",
 		"multer": "^1.4.5-lts.1",
 		"node-cache": "^5.1.2",
 		"node-schedule": "^2.1.0",

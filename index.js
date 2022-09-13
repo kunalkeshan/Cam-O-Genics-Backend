@@ -10,10 +10,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
+const logger = require('morgan');
 const appRouter = require('./routers');
 const { ApiError, initializeApp } = require('./utils/custom');
 const errorHandler = require('./middlewares/apiError');
-const { PORT, DB_URL } = require('./config');
+const { PORT, DB_URL, isProduction } = require('./config');
 
 // Application
 const app = express();
@@ -22,11 +23,15 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(logger(isProduction ? 'combined' : 'dev'));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 require('./utils/jobs');
 
 // Use Application Router
 app.use(appRouter);
+
+// ping - returns 200 status code
+app.get('/ping', (req, res) => res.status(200).end());
 
 // API Error Handler
 app.use('/api', (req, res, next) => {
