@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"install-all-deps": "npm i & cd client && npm i",
-		"start": "npm run build && node index.js",
+		"start": "node index.js",
 		"start:server": "nodemon index.js",
 		"start:client": "cd client && npm start",
 		"start:all": "concurrently \"npm run start:server\" \"npm run start:client\"",
