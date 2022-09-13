@@ -31,7 +31,7 @@ require('./utils/jobs');
 app.use(appRouter);
 
 // ping - returns 200 status code
-app.get('/ping', (req, res) => res.status(200).end());
+app.get('/ping', (req, res) => res.status(200).end('pong'));
 
 // API Error Handler
 app.use('/api', (req, res, next) => {
