@@ -9,14 +9,14 @@ const User = require('../models/User');
 const { ApiError } = require('../utils/custom');
 
 const checkJwt = async (req, res, next) => {
-    const token = req.headers.Authorization.split(' ').pop();
+    const [type = '', token = ''] = req.headers?.authorization ? req.headers.authorization.split(' ') : [];
     try {
         if (!token) return next();
         const decoded = jwt.verify(token, JWT_SECRET);
         if (Date.now() > decoded.exp) { throw new ApiError({ message: 'auth/token-expired', statusCode: 401 }); }
-        const user = await User.findById(decoded.payload);
+        const user = await User.findById(decoded);
         req.user = user;
-        req.token = token;
+        req.auth = { type, token };
         return next();
     } catch (error) {
         return next(error);
@@ -25,7 +25,14 @@ const checkJwt = async (req, res, next) => {
 
 const checkAuthRole = (ALLOWED_ROLES = []) => async (req, res, next) => {
     try {
-        if (!req.user && !req.token) throw new ApiError({ message: 'auth/user-token-invalid', statusCode: 401 });
+        if (req.auth?.type !== 'Bearer') {
+            throw new ApiError({
+                message: 'auth/bearer-token-required',
+                statusCode: 401,
+                data: { message: 'Authorization header requires bearer token, view given example', headers: 'authorization: "Bearer <token>"' },
+            });
+        }
+        if (!req.user && !req.auth?.token) throw new ApiError({ message: 'auth/user-token-invalid', statusCode: 401 });
         if (ALLOWED_ROLES.includes('*')) return next();
         const USER_HAS_ROLE = ALLOWED_ROLES.includes(req.user.authRole);
         if (USER_HAS_ROLE) return next();

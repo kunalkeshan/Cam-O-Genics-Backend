@@ -6,17 +6,25 @@
 const Router = require('express').Router();
 const userController = require('../controllers/user');
 const validateSchema = require('../middlewares/validator');
+const { checkAuthRole, checkJwt } = require('../middlewares/auth');
 const userSchemas = require('../schemas/user');
 
-Router.post('/name', validateSchema(userSchemas.updateNameSchema), userController.updateName);
+Router.use(checkJwt);
 
-Router.post('/phone', validateSchema(userSchemas.updatePhoneSchema), userController.updatePhone);
+Router.post('/name', checkAuthRole(['*']), validateSchema('body', userSchemas.updateNameSchema), userController.updateName);
 
-Router.post('/address', validateSchema(userSchemas.updateAddressSchema), userController.updateAddress);
+Router.post('/phone', checkAuthRole(['*']), validateSchema('body', userSchemas.updatePhoneSchema), userController.updatePhone);
 
-Router.post('/password', validateSchema(userSchemas.updatePasswordSchema), userController.updatePassword);
+Router.post('/address', checkAuthRole(['*']), validateSchema('body', userSchemas.updateAddressSchema), userController.updateAddress);
 
-Router.post('/community-identities', validateSchema(userSchemas.updateCommunityIdentities), userController.updateCommunityIdentities);
+Router.post('/password', checkAuthRole(['*']), validateSchema('body', userSchemas.updatePasswordSchema), userController.updatePassword);
+
+Router.post(
+    '/community-identities',
+    checkAuthRole(['*']),
+    validateSchema('body', userSchemas.updateCommunityIdentities),
+    userController.updateCommunityIdentities,
+);
 
 // Exporting Router
 module.exports = Router;

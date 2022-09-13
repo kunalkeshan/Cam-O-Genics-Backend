@@ -13,7 +13,6 @@ UserController.updateName = async (req, res, next) => {
     const { fullName } = req.body;
     const { user } = req;
     try {
-        if (fullName.length < 0) throw new ApiError({ message: 'user/name-cannot-be-empty', statusCode: 400 });
         await User.updateOne({ id: user.id }, { fullName });
 
         return res.status(200).json({
@@ -30,7 +29,6 @@ UserController.updatePhone = async (req, res, next) => {
     const { phone } = req.body;
     const { user } = req;
     try {
-        if (phone.length < 0) throw new ApiError({ message: 'user/phone-cannot-be-empty', statusCode: 400 });
         await User.updateOne({ id: user.id }, { phone });
 
         return res.status(200).json({

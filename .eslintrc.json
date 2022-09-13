@@ -12,6 +12,6 @@
 	"rules": {
 		"indent": ["off", 4],
 		"linebreak-style": "off",
-		"max-len": ["warn", 150]
+		"max-len": ["warn", 160]
 	}
 }
