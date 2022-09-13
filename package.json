@@ -9,8 +9,9 @@
 		"start:server": "nodemon index.js",
 		"start:client": "cd client && npm start",
 		"start:all": "concurrently \"npm run start:server\" \"npm run start:client\"",
+		"build:server": "npm i",
 		"build:client": "cd client && npm i && npm run build",
-		"build": "npm run build:client"
+		"build": "npm run build:server && npm run build:client"
 	},
 	"repository": {
 		"type": "git",
