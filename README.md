@@ -1,8 +1,10 @@
 # Cam O Genics Backend Application
 
+<a href="https://cogc.kunalkeshan.dev/">
 <p align="center">
 <img src="/public/images/gh-thumbnail-backend.jpg" alt="CamOGenics GitHub Backend Thumbnail" width="60%" height="auto" />
 </p>
+</a>
 
 **Table of Contents**:
 
