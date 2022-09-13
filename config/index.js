@@ -28,6 +28,7 @@ const configuration = {
         email: process.env.MAIL_EMAIL,
         password: process.env.MAIL_PASSWORD,
     },
+    AUTH_ROLES: ['ADMIN', 'PRESIDENT', 'SECRETARY', 'ALUMNI', 'MEMBER'],
 };
 
 // Exporting Configuration

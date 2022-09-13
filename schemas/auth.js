@@ -37,5 +37,11 @@ AuthSchema.resetPasswordSchema = Joi.object({
     password: Joi.string().regex(APP_REGEX.PASSWORD).required(),
 });
 
+AuthSchema.AuthRoleSchema = Joi.object({
+    userId: Joi.string().hex().length(24).required(),
+    role: Joi.string().required(),
+    assign: Joi.boolean().required(),
+});
+
 // Exporting Schema
 module.exports = AuthSchema;

@@ -8,7 +8,8 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { format } = require('date-fns');
-const { JWT_SECRET } = require('../config');
+const { JWT_SECRET, AUTH_ROLES } = require('../config');
+const { ApiError } = require('../utils/custom');
 
 // User Schema
 const UserSchema = new Schema({
@@ -40,7 +41,8 @@ const UserSchema = new Schema({
     },
     authRole: {
         type: String,
-        enum: ['ADMIN', 'PRESIDENT', 'SECRETARY', 'ALUMNI'],
+        enum: AUTH_ROLES,
+        default: 'MEMBER',
     },
     communityIdentities: [{
         type: [String],
@@ -98,6 +100,22 @@ UserSchema.methods.sanitize = async function () {
     user.createdAt = format(new Date(user.createdAt), 'PPP');
     user.updatedAt = format(new Date(user.updatedAt), 'PPP');
     return user;
+};
+
+UserSchema.statics.cascadeAuthRole = async function ({ userId, role, assign }) {
+    // eslint-disable-next-line no-use-before-define
+    const user = await User.findById(userId);
+    if (!user) throw new ApiError({ message: 'auth/account-does-not-exist', statusCode: 404 });
+    if (AUTH_ROLES.includes(role)) throw new ApiError({ message: 'auth/invalid-role', statusCode: 400 });
+    if (assign) {
+        if (user.authRole === role) throw new ApiError({ message: 'auth/user-role-already-assigned', statusCode: 409 });
+        user.authRole = role;
+    } else {
+        if (user.authRole !== role) throw new ApiError({ message: 'auth/user-role-not-assigned', statusCode: 404 });
+        user.authRole = 'MEMBER';
+    }
+    await user.save();
+    return Promise.resolve();
 };
 
 // Hooks

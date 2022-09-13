@@ -119,9 +119,49 @@ AuthController.resetPassword = async (req, res, next) => {
     }
 };
 
-// AuthController.addAuthRole = async (req, res, next) => {};
+AuthController.updateAdminRole = async (req, res, next) => {
+    const { userId, role, assign } = req.body;
+    try {
+        await User.cascadeAuthRole({ userId, role, assign });
+        const message = assign ? 'auth/admin-role-assigned' : 'auth/admin-role-removed';
+        return res.status(200).json({ message });
+    } catch (error) {
+        return next(error);
+    }
+};
 
-// AuthController.deleteAuthRole = async (req, res, next) => {};
+AuthController.updatePresidentRole = async (req, res, next) => {
+    const { userId, role, assign } = req.body;
+    try {
+        await User.cascadeAuthRole({ userId, role, assign });
+        const message = assign ? 'auth/president-role-assigned' : 'auth/president-role-removed';
+        return res.status(200).json({ message });
+    } catch (error) {
+        return next(error);
+    }
+};
+
+AuthController.updateSecretaryRole = async (req, res, next) => {
+    const { userId, role, assign } = req.body;
+    try {
+        await User.cascadeAuthRole({ userId, role, assign });
+        const message = assign ? 'auth/secretary-role-assigned' : 'auth/secretary-role-removed';
+        return res.status(200).json({ message });
+    } catch (error) {
+        return next(error);
+    }
+};
+
+AuthController.updateAlumniRole = async (req, res, next) => {
+    const { userId, role, assign } = req.body;
+    try {
+        await User.cascadeAuthRole({ userId, role, assign });
+        const message = assign ? 'auth/alumni-role-assigned' : 'auth/alumni-role-removed';
+        return res.status(200).json({ message });
+    } catch (error) {
+        return next(error);
+    }
+};
 
 // Exporting Controller
 module.exports = AuthController;
