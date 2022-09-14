@@ -45,8 +45,8 @@ const UserSchema = new Schema({
         default: 'MEMBER',
     },
     communityIdentities: [{
-        type: [String],
-        enum: ['PHOTOGRAPHER', 'GRAPHIC DESIGNER', 'VIDEO EDITOR'],
+        type: [Schema.Types.ObjectId],
+        ref: 'Club.communityRoles',
     }],
     links: {
         instagram: String,
@@ -95,6 +95,7 @@ UserSchema.methods.generateDefaultAvatar = async function () {
 };
 
 UserSchema.methods.sanitize = async function () {
+    await this.populate('communityIdentities');
     const user = this.toJSON();
     delete user.password;
     user.createdAt = format(new Date(user.createdAt), 'PPP');

@@ -22,6 +22,10 @@ const ClubSchema = new Schema({
         website: String,
         blog: String,
     },
+    communityRoles: [{
+        role: String,
+        description: String,
+    }],
 }, {
     timestamps: true,
     skipVersioning: true,
