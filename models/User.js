@@ -21,7 +21,13 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    personalEmail: String,
+    personalEmail: {
+        type: String,
+        public: {
+            type: Boolean,
+            default: true,
+        },
+    },
     password: {
         type: String,
         required: true,
@@ -30,10 +36,25 @@ const UserSchema = new Schema({
     cogcId: {
         type: String,
     },
-    phone: String,
+    phone: {
+        type: String,
+        public: {
+            type: Boolean,
+            default: true,
+        },
+    },
     defaultAvatar: String,
     avatar: String,
     address: String,
+    headline: String,
+    about: String,
+    dob: {
+        date: Date,
+        public: {
+            type: Boolean,
+            default: true,
+        },
+    },
     memberRole: {
         type: String,
         enum: ['COGC', 'COG'], // CamOGenics Community, CamOGenics Member
@@ -70,6 +91,10 @@ const UserSchema = new Schema({
                 type: Boolean,
                 default: true,
                 immutable: true,
+            },
+            updates: {
+                type: Boolean,
+                default: true,
             },
         },
     },
