@@ -25,11 +25,11 @@ Router.post('/reset-password', validateSchema('body', authSchemas.resetPasswordS
 
 Router.post('/role/admin', checkAuthRole(['ADMIN']), validateSchema('body', authSchemas.AuthRoleSchema), authController.updateAdminRole);
 
-Router.post('/role/president', checkAuthRole(['PRESIDENT']), validateSchema('body', authSchemas.AuthRoleSchema), authController.updatePresidentRole);
+Router.post('/role/president', checkAuthRole(['ADMIN']), validateSchema('body', authSchemas.AuthRoleSchema), authController.updatePresidentRole);
 
-Router.post('/role/alumni', checkAuthRole(['ALUMNI']), validateSchema('body', authSchemas.AuthRoleSchema), authController.updateAlumniRole);
+Router.post('/role/alumni', checkAuthRole(['ADMIN', 'PRESIDENT']), validateSchema('body', authSchemas.AuthRoleSchema), authController.updateAlumniRole);
 
-Router.post('/role/secretary', checkAuthRole(['SECRETARY']), validateSchema('body', authSchemas.AuthRoleSchema), authController.updateSecretaryRole);
+Router.post('/role/secretary', checkAuthRole(['ADMIN', 'PRESIDENT']), validateSchema('body', authSchemas.AuthRoleSchema), authController.updateSecretaryRole);
 
 // Exporting Router
 module.exports = Router;
