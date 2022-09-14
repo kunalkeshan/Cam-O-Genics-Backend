@@ -60,6 +60,19 @@ const UserSchema = new Schema({
         behance: String,
         dribble: String,
     },
+    settings: {
+        emails: {
+            events: {
+                type: Boolean,
+                default: true,
+            },
+            account: {
+                type: Boolean,
+                default: true,
+                immutable: true,
+            },
+        },
+    },
 }, {
     timestamps: true,
     strict: true,
