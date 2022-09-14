@@ -62,7 +62,10 @@ UserController.updatePassword = async (req, res, next) => {
     const { password } = req.body;
     const { user } = req;
     try {
-        if (password.length < 0) throw new ApiError({ message: 'user/password-cannot-be-empty', statusCode: 400 });
+        const isSamePassword = await user.compareHashedPassword(password);
+
+        if (isSamePassword) throw new ApiError({ message: 'user/password-cannot-be-same', statusCode: 409 });
+
         user.password = password;
         await user.save();
 
