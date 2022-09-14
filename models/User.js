@@ -8,6 +8,7 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { format } = require('date-fns');
+const { UserNotifications } = require('./Notifications');
 const { JWT_SECRET, AUTH_ROLES } = require('../config');
 const { ApiError } = require('../utils/custom');
 
@@ -168,6 +169,14 @@ UserSchema.pre('save', async function (next) {
         }
         // eslint-disable-next-line
     } catch (_) { }
+    next();
+});
+
+UserSchema.post('save', async function (user, next) {
+    if (this.isNew) {
+        // eslint-disable-next-line no-underscore-dangle
+        await UserNotifications.create({ userId: user._id });
+    }
     next();
 });
 
