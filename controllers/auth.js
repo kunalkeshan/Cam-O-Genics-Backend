@@ -38,7 +38,30 @@ AuthController.signupClubMember = async (req, res, next) => {
     }
 };
 
-// AuthController.signupCommunityMember = async (req, res, next) => { };
+AuthController.signupCommunityMember = async (req, res, next) => {
+    const {
+        fullName, registerNo, email, password,
+    } = req.body;
+    try {
+        let user = await User.findOne({ officialEmail: email });
+        if (user) throw new ApiError({ message: 'auth/account-already-exists', statusCode: 409 });
+
+        user = new User({
+            fullName, registerNo, password, officialEmail: email, memberRole: 'COGC',
+        });
+        await user.save();
+
+        user = await user.sanitize();
+        authMailer.sendCommunityMemberSignup(user);
+
+        return res.status(201).json({
+            message: 'auth/cogc-account-created',
+            data: { user },
+        });
+    } catch (error) {
+        return next(error);
+    }
+};
 
 AuthController.loginUser = async (req, res, next) => {
     const { user, password } = req.body;

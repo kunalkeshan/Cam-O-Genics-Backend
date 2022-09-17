@@ -13,7 +13,7 @@ Router.use(checkJwt);
 
 Router.post('/signup/cog', validateSchema('body', authSchemas.signupClubMemberSchema), authController.signupClubMember);
 
-// Router.post('/signup/cogc', authController.signupCommunityMember);
+Router.post('/signup/cogc', validateSchema('body', authSchemas.signupCommunityMemberSchema), authController.signupCommunityMember);
 
 Router.post('/login', validateSchema('body', authSchemas.loginUserSchema), authController.loginUser);
 

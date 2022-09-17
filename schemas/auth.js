@@ -16,7 +16,12 @@ AuthSchema.signupClubMemberSchema = Joi.object({
     password: Joi.string().required().regex(APP_REGEX.PASSWORD),
 });
 
-AuthSchema.signupCommunityMemberSchema = Joi.object({});
+AuthSchema.signupCommunityMemberSchema = Joi.object({
+    fullName: Joi.string().required(),
+    registerNo: Joi.string().regex(APP_REGEX.RAMAPURAM_ENGINEERING_REGISTER_NO).required(),
+    password: Joi.string().required().regex(APP_REGEX.PASSWORD),
+    email: Joi.string().email().required().regex(APP_REGEX.COLLEGE_EMAIL),
+});
 
 AuthSchema.loginUserSchema = Joi.object({
     user: Joi.alternatives([Joi.string(), Joi.string().regex(APP_REGEX.COGID), Joi.string().email().regex(APP_REGEX.COLLEGE_EMAIL)]).required(),
