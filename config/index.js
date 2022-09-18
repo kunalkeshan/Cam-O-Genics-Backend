@@ -36,6 +36,7 @@ const configuration = {
         password: process.env.MAIL_PASSWORD,
     },
     AUTH_ROLES: ['ADMIN', 'PRESIDENT', 'SECRETARY', 'ALUMNI', 'MEMBER'],
+    GITHUB_URL: 'https://github.com/kunalkeshan/Cam-O-Genics-Backend',
 };
 
 // Exporting Configuration
