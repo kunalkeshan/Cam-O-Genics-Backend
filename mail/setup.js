@@ -16,5 +16,17 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+transporter.on('error', (error) => {
+    transporter.sendMail({
+        to: MAIL_CONFIG.email,
+        subject: 'Error while ending email!',
+        html: `
+        <p>Error while sending email</p>
+        <p>Name: ${error.name}</p>
+        <p>Message: ${error.message}</p>
+    `,
+    });
+});
+
 // Export Util
 module.exports = transporter;

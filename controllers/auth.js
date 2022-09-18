@@ -18,7 +18,7 @@ AuthController.signupClubMember = async (req, res, next) => {
         fullName, cogcId, email, password,
     } = req.body;
     try {
-        let user = await User.findOne({ officialEmail: email });
+        let user = await User.findOne({ $or: [{ officialEmail: email }, { cogcId }] });
         if (user) throw new ApiError({ message: 'auth/account-already-exists', statusCode: 409 });
 
         user = new User({

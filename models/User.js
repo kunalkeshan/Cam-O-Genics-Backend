@@ -21,6 +21,7 @@ const UserSchema = new Schema({
     officialEmail: {
         type: String,
         required: true,
+        unique: true,
     },
     personalEmail: {
         type: String,
@@ -36,6 +37,7 @@ const UserSchema = new Schema({
     registerNo: String,
     cogcId: {
         type: String,
+        unique: true,
     },
     phone: {
         type: String,
@@ -97,6 +99,9 @@ const UserSchema = new Schema({
                 type: Boolean,
                 default: true,
             },
+        },
+        auth: {
+            enableBiometricLogin: Boolean,
         },
     },
 }, {

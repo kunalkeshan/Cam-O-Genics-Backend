@@ -20,10 +20,6 @@ const EventSchema = new Schema({
         ref: 'User',
         required: true,
     },
-    managers: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-    }],
     mode: {
         type: String,
         enum: ['ONLINE', 'OFFLINE'],

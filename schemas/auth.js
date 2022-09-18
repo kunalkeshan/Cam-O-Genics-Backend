@@ -11,7 +11,7 @@ const AuthSchema = {};
 
 AuthSchema.signupClubMemberSchema = Joi.object({
     fullName: Joi.string().required(),
-    cogcId: Joi.string().required().regex(APP_REGEX.COGID),
+    cogcId: Joi.string().required().regex(APP_REGEX.COGID, 'i'),
     email: Joi.string().email().required().regex(APP_REGEX.COLLEGE_EMAIL),
     password: Joi.string().required().regex(APP_REGEX.PASSWORD),
 });
@@ -24,12 +24,12 @@ AuthSchema.signupCommunityMemberSchema = Joi.object({
 });
 
 AuthSchema.loginUserSchema = Joi.object({
-    user: Joi.alternatives([Joi.string(), Joi.string().regex(APP_REGEX.COGID), Joi.string().email().regex(APP_REGEX.COLLEGE_EMAIL)]).required(),
+    user: Joi.alternatives([Joi.string(), Joi.string().regex(APP_REGEX.COGID, 'i'), Joi.string().email().regex(APP_REGEX.COLLEGE_EMAIL)]).required(),
     password: Joi.string().required(),
 });
 
 AuthSchema.forgotPasswordSchema = Joi.object({
-    user: Joi.alternatives([Joi.string(), Joi.string().regex(APP_REGEX.COGID), Joi.string().email().regex(APP_REGEX.COLLEGE_EMAIL)]).required(),
+    user: Joi.alternatives([Joi.string(), Joi.string().regex(APP_REGEX.COGID, 'i'), Joi.string().email().regex(APP_REGEX.COLLEGE_EMAIL)]).required(),
 });
 
 AuthSchema.verifyOtpSchema = Joi.object({
