@@ -135,7 +135,7 @@ UserSchema.methods.compareHashedPassword = async function (password) {
 
 UserSchema.methods.generateDefaultAvatar = async function () {
     const fullNameSpaceAdjusted = this.fullName.replace(/\W+/, '%20');
-    this.defaultAvatar = `https://avatars.dicebear.com/api/initials/${fullNameSpaceAdjusted}.svg`;
+    this.defaultAvatar = `https://avatars.dicebear.com/api/initials/${fullNameSpaceAdjusted}.png`;
 };
 
 UserSchema.methods.sanitize = async function () {
