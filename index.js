@@ -49,12 +49,11 @@ app.use(errorHandler);
 // Connect DB and Start server
 mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
-        console.log('\n\n🗃️  Connected to MongoDB.');
+        console.log('\n\n🗃️ Connected to MongoDB.');
         app.listen(PORT, () => console.log(`🚀 Server running at PORT: ${PORT}`));
         initializeApp();
     })
     .catch((err) => {
-        console.log(`Unable to connect to DB and start server: ${err}`);
+        console.log(`Unable to connect to DB and start server:\n${err}`);
         process.exit(1);
     });
-// test

@@ -5,7 +5,9 @@
 // Dependencies
 const fs = require('fs');
 const path = require('path');
+const open = require('open');
 const Club = require('../models/Club');
+const { PORT, isProduction } = require('../config');
 
 /**
  * @description ApiError class, returns error object with custom config
@@ -28,7 +30,7 @@ async function createClubDocument() {
     if (ClubDocCount === 0) await Club.create({});
 }
 
-function createDirectories() {
+async function createDirectories() {
     const DIRECTORIES = ['.data/otp'];
     DIRECTORIES.forEach((dir) => {
         const dirPath = path.join(__dirname, '..', dir);
@@ -38,6 +40,13 @@ function createDirectories() {
     });
 }
 
+async function openAppInBrowser() {
+    if (!isProduction) {
+        return open(`http://localhost:${PORT}`, { app: { name: open.apps.chrome } });
+    }
+    return Promise.resolve();
+}
+
 /**
  * @description Runs a set of function when the application is initialized.
  */
@@ -45,6 +54,7 @@ const initializeApp = async () => {
     try {
         await createClubDocument();
         await createDirectories();
+        await openAppInBrowser();
         // eslint-disable-next-line no-console
         console.log('✨ App Initialized!\n\n');
         // eslint-disable-next-line no-empty
