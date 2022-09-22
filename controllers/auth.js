@@ -138,7 +138,7 @@ AuthController.verifyOtp = async (req, res, next) => {
     const { id, otp } = req.body;
     try {
         await otpUtil.verifyOtp(id, otp);
-        let user = await User.findById(id).select('fullName officialEmail defaultAvatar avatar');
+        let user = await User.findById(id).select('fullName officialEmail defaultAvatar avatar createdAt updatedAt');
         if (!user) throw new ApiError({ message: 'auth/account-does-not-exist', statusCode: 404 });
 
         user = await user.sanitize();
