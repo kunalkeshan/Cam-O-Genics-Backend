@@ -122,7 +122,7 @@ AuthController.forgotPassword = async (req, res, next) => {
 
         return res.status(200).json({
             message: 'auth/otp-session-live',
-            data: { id: fpUser.id, otp, expiresIn },
+            data: { id: fpUser.id, expiresIn },
         });
     } catch (error) {
         return next(error);
