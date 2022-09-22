@@ -7,6 +7,16 @@
 // Notifications Controller Container
 const NotificationsController = {};
 
+/** --------------------------
+ * UNAUTHENTICATED CONTROLLERS
+ * ---------------------------
+*/
+
+/** --------------------------
+ * AUTHENTICATED CONTROLLERS
+ * ---------------------------
+*/
+
 // NotificationsController.createNewNotification = async (req, res, next) => { };
 
 // NotificationsController.updateNotification = async (req, res, next) => { };

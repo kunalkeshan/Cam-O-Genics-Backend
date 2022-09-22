@@ -11,6 +11,16 @@ const userSchemas = require('../schemas/user');
 
 Router.use(checkJwt);
 
+/** --------------------------
+ * UNAUTHENTICATED ROUTES
+ * ---------------------------
+*/
+
+/** --------------------------
+ * AUTHENTICATED ROUTES
+ * ---------------------------
+*/
+
 Router.post('/name', checkAuthRole(['*']), validateSchema('body', userSchemas.updateNameSchema), userController.updateName);
 
 Router.post('/phone', checkAuthRole(['*']), validateSchema('body', userSchemas.updatePhoneSchema), userController.updatePhone);

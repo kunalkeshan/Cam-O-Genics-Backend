@@ -11,6 +11,16 @@ const { checkJwt, checkAuthRole } = require('../middlewares/auth');
 
 Router.use(checkJwt);
 
+/** --------------------------
+ * UNAUTHENTICATED ROUTES
+ * ---------------------------
+*/
+
+/** --------------------------
+ * AUTHENTICATED ROUTES
+ * ---------------------------
+*/
+
 Router.post(
     '/create',
     checkAuthRole(['ADMIN', 'PRESIDENT', 'SECRETARY']),

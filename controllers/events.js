@@ -11,9 +11,19 @@ const { sendNewEventEmail } = require('../mail/events');
 // Events Controller Container
 const EventsController = {};
 
+/** --------------------------
+ * UNAUTHENTICATED CONTROLLERS
+ * ---------------------------
+*/
+
 // EventsController.getActiveEvents = async (req, res, next) => {};
 
 // EventsController.getCompletedEvents = async (req, res, next) => {};
+
+/** --------------------------
+ * UNAUTHENTICATED CONTROLLERS
+ * ---------------------------
+*/
 
 EventsController.createNewEvent = async (req, res, next) => {
     try {

@@ -9,6 +9,16 @@ const { ApiError } = require('../utils/custom');
 // User Controller Container
 const UserController = {};
 
+/** --------------------------
+ * UNAUTHENTICATED CONTROLLERS
+ * ---------------------------
+*/
+
+/** --------------------------
+ * AUTHENTICATED CONTROLLERS
+ * ---------------------------
+*/
+
 UserController.updateName = async (req, res, next) => {
     const { fullName } = req.body;
     const { user } = req;

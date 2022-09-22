@@ -13,6 +13,16 @@ const { JWT_SECRET } = require('../config');
 // Auth Controller Container
 const AuthController = {};
 
+/** --------------------------
+ * UNAUTHENTICATED CONTROLLERS
+ * ---------------------------
+*/
+
+/**
+ * @description Signup a new CamOGenics Club Member
+ * @api /api/auth/signup/cog
+ * @method POST
+ */
 AuthController.signupClubMember = async (req, res, next) => {
     const {
         fullName, cogcId, email, password,
@@ -38,6 +48,11 @@ AuthController.signupClubMember = async (req, res, next) => {
     }
 };
 
+/**
+ * @description Signup a new CamOGenics Community Member
+ * @api /api/auth/signup/cogc
+ * @method POST
+ */
 AuthController.signupCommunityMember = async (req, res, next) => {
     const {
         fullName, registerNo, email, password,
@@ -63,6 +78,11 @@ AuthController.signupCommunityMember = async (req, res, next) => {
     }
 };
 
+/**
+ * @description Login User
+ * @api /api/auth/login
+ * @method POST
+ */
 AuthController.loginUser = async (req, res, next) => {
     const { user, password } = req.body;
     try {
@@ -83,6 +103,11 @@ AuthController.loginUser = async (req, res, next) => {
     }
 };
 
+/**
+ * @description Send an email to user who forgot password
+ * @api /api/auth/forgot-password
+ * @method POST
+ */
 AuthController.forgotPassword = async (req, res, next) => {
     const { user } = req.body;
     try {
@@ -104,6 +129,11 @@ AuthController.forgotPassword = async (req, res, next) => {
     }
 };
 
+/**
+ * @description Verify otp for a given session
+ * @api /api/auth/verify-otp
+ * @method POST
+ */
 AuthController.verifyOtp = async (req, res, next) => {
     const { id, otp } = req.body;
     try {
@@ -122,6 +152,11 @@ AuthController.verifyOtp = async (req, res, next) => {
     }
 };
 
+/**
+ * @description If OTP matches, allow user to reset password
+ * @api /api/auth/reset-password
+ * @method POST
+ */
 AuthController.resetPassword = async (req, res, next) => {
     const { token, password } = req.body;
     try {
@@ -142,6 +177,16 @@ AuthController.resetPassword = async (req, res, next) => {
     }
 };
 
+/** --------------------------
+ * AUTHENTICATED CONTROLLERS
+ * ---------------------------
+*/
+
+/**
+ * @description Change ADMIN role
+ * @api /api/auth/role/admin
+ * @method POST
+ */
 AuthController.updateAdminRole = async (req, res, next) => {
     const { userId, role, assign } = req.body;
     try {
@@ -153,6 +198,11 @@ AuthController.updateAdminRole = async (req, res, next) => {
     }
 };
 
+/**
+ * @description Change PRESIDENT role
+ * @api /api/auth/role/president
+ * @method POST
+ */
 AuthController.updatePresidentRole = async (req, res, next) => {
     const { userId, role, assign } = req.body;
     try {
@@ -164,6 +214,11 @@ AuthController.updatePresidentRole = async (req, res, next) => {
     }
 };
 
+/**
+ * @description Change SECRETARY role
+ * @api /api/auth/role/secretary
+ * @method POST
+ */
 AuthController.updateSecretaryRole = async (req, res, next) => {
     const { userId, role, assign } = req.body;
     try {
@@ -175,6 +230,11 @@ AuthController.updateSecretaryRole = async (req, res, next) => {
     }
 };
 
+/**
+ * @description Change ALUMNI role
+ * @api /api/auth/role/alumni
+ * @method POST
+ */
 AuthController.updateAlumniRole = async (req, res, next) => {
     const { userId, role, assign } = req.body;
     try {
