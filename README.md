@@ -10,6 +10,9 @@
 
 - [About](#about)
 - [Features](#features)
+  - [Common Features](#common-features)
+  - [CamOGenics Club Member](#camogenics-club-member)
+  - [CamOGenics Community Member](#camogenics-community-member)
 - [Endpoints Documentation](#endpoints-documentation)
 - [Contributing](#contributing)
   - [Project Contributors](#project-contributors)
@@ -21,7 +24,41 @@ Cam O Genics is the Photography and film Society of SRM IST Ramapuram. This proj
 
 ## Features
 
+The backend application of Cam O Genics has many features, the can be narrowed down based on the club/community roles and the in-club roles assigned to a member.
+
+### Common Features
+
+- Open Signup and login for both Club and Community members.
+- Signup with Club member with the CamOGenics Id only.
+- Signup with Community member with official college email only.
+- Login using either, email, password, or phone and password.
+- Show off your profile with others, change your details with in-app profile settings.
+- View Club events.
+- Get Notifications and emails (conditionally) about club updates.
+
+### CamOGenics Club Member
+
+| Features/Roles | ADMIN | PRESIDENT | SECRETARY | MEMBER | ALUMNI |
+| --- | :-: | :-: | :-: | :-: | :-: |
+| Create Events | yes | yes | yes | no | no |
+| Update Events | yes | yes | yes | no | no |
+| Delete Events | yes | yes | yes | no | no |
+| Add/Delete Community Identities | yes | yes | yes | no | no |
+| Update Club Information | yes | yes | no | no | no |
+| Update Own Profile | yes | yes | yes | yes | yes |
+| Change ADMIN Role | yes | no | no | no | no |
+| Change PRESIDENT Role | yes | yes | no | no | no |
+| Change SECRETARY Role | yes | yes | yes | no | no |
+| Change MEMBER Role | yes | yes | yes | no | no |
+| Change ALUMNI Role | yes | yes | yes | no | no |
+
+### CamOGenics Community Member
+
+Mostly has only read-only access. Can update their own profile and open issues, queries and contact to the community.
+
 ## Endpoints Documentation
+
+Refer to the [CamOGenics Backend App's](/wiki) Wiki to learn more about the application endpoints.
 
 ## Contributing
 
