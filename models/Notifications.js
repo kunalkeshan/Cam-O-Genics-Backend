@@ -24,11 +24,17 @@ const NotificationsSchema = new Schema({
         ref: 'User',
         required: true,
     },
-    updatedBy: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
-    },
+    updatedBy: [{
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        },
+        time: {
+            type: Date,
+            default: Date.now,
+        },
+    }],
     category: {
         type: String,
         enum: ['EVENT', 'UPDATE'],

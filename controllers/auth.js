@@ -74,7 +74,7 @@ AuthController.loginUser = async (req, res, next) => {
 
         loginUser = await loginUser.sanitize();
 
-        return res.status(201).json({
+        return res.status(200).json({
             message: 'auth/user-login-successful',
             data: { loginUser },
         });
