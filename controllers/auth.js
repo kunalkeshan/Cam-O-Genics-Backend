@@ -118,7 +118,7 @@ AuthController.forgotPassword = async (req, res, next) => {
         const TenMins = 1000 * 60 * 10;
         const expiresIn = Date.now() + TenMins;
 
-        authMailer.sendForgotPassword({ ...fpUser, otp });
+        authMailer.sendForgotPassword({ ...fpUser.toJSON(), otp });
 
         return res.status(200).json({
             message: 'auth/otp-session-live',
