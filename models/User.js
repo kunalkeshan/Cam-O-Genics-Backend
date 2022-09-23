@@ -24,7 +24,7 @@ const UserSchema = new Schema({
         unique: true,
     },
     personalEmail: {
-        type: String,
+        value: String,
         public: {
             type: Boolean,
             default: true,
@@ -40,7 +40,7 @@ const UserSchema = new Schema({
         unique: true,
     },
     phone: {
-        type: String,
+        value: String,
         public: {
             type: Boolean,
             default: true,
@@ -83,6 +83,10 @@ const UserSchema = new Schema({
         drivePhotos: String,
         behance: String,
         dribble: String,
+        medium: String,
+        hashnode: String,
+        devTo: String,
+        resume: String,
     },
     settings: {
         emails: {

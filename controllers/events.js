@@ -14,7 +14,6 @@ const EventsController = {};
 /** --------------------------
  * UNAUTHENTICATED CONTROLLERS
  * ---------------------------
-*/
 
 // EventsController.getActiveEvents = async (req, res, next) => {};
 

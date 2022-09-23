@@ -56,6 +56,11 @@ OtpContainer.genOtp = async (userId = '', length = 4) => {
     // Convert otp to string
     otp = String(otp);
 
+    const dirPath = path.join(__dirname, '..', '/.data/otp');
+    if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath, { recursive: true });
+    }
+
     // Set otp in cache
     fs.readFile(otpPath, 'utf8', (err, data) => {
         if (!err && data) {

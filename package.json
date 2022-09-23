@@ -24,6 +24,7 @@
 	},
 	"homepage": "https://github.com/kunalkeshan/Cam-O-Genics-Backend#readme",
 	"dependencies": {
+		"@touch4it/ical-timezones": "^1.8.1",
 		"@wavychat/mjml-parser": "^1.2.0",
 		"bcryptjs": "^2.4.3",
 		"cors": "^2.8.5",
