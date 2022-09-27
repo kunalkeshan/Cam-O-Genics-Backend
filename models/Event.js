@@ -6,6 +6,14 @@
 // Dependencies
 const { Schema, model } = require('mongoose');
 const { format } = require('date-fns');
+const { ICalCalendar } = require('ical-generator');
+const { getVtimezoneComponent } = require('@touch4it/ical-timezones');
+
+const calendar = new ICalCalendar();
+calendar.timezone({
+    name: 'Asia/Calcutta',
+    generator: getVtimezoneComponent,
+});
 
 // Event Schema
 const EventSchema = new Schema({
@@ -60,6 +68,14 @@ const EventSchema = new Schema({
 EventSchema.methods.sanitize = async function () {
     await this.populate('createdBy lastUpdatedBy.user', 'fullName officialEmail defaultAvatar avatar id');
     const event = this.toJSON();
+
+    event.ical = calendar.createEvent({
+        timezone: 'Asia/Calcutta',
+        start: event.startDate,
+        end: event.endDate,
+        status: 'CONFIRMED',
+    });
+
     event.createdAt = format(new Date(event.createdAt), 'PPP');
     event.updatedAt = format(new Date(event.updatedAt), 'PPP');
     return event;
