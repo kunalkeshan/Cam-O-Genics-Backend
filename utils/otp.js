@@ -84,14 +84,18 @@ OtpContainer.genOtp = async (userId = '', length = 4) => {
  * @returns Promise<boolean>
  */
 OtpContainer.verifyOtp = async (userId = '', otp = '') => {
-    const CACHE = JSON.parse(fs.readFileSync(otpDataPath(userId), 'utf8'));
-    if (!CACHE) throw new ApiError({ message: 'auth/otp-expired', statusCode: 401 });
-    const isValidOtp = CACHE.find((data) => data.otp === otp);
-    if (isValidOtp) {
-        fs.unlinkSync(otpDataPath(userId));
-        return true;
+    try {
+        const CACHE = JSON.parse(fs.readFileSync(otpDataPath(userId), 'utf8'));
+        if (!CACHE) throw new ApiError({ message: 'auth/otp-expired', statusCode: 401 });
+        const isValidOtp = CACHE.find((data) => data.otp === otp);
+        if (isValidOtp) {
+            fs.unlinkSync(otpDataPath(userId));
+            return true;
+        }
+        throw new ApiError({ message: 'auth/otp-invalid', statusCode: 401 });
+    } catch (error) {
+        throw new ApiError({ message: 'auth/otp-unauthorized', statusCode: 401 });
     }
-    throw new ApiError({ message: 'auth/otp-invalid', statusCode: 401 });
 };
 
 OtpContainer.clearExpiredOtps = async function () {
