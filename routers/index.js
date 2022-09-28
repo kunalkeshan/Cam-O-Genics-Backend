@@ -9,6 +9,7 @@ const userRouter = require('./user');
 const eventsRouter = require('./events');
 const clubRouter = require('./club');
 const notificationsRouter = require('./notifications');
+const auditRouter = require('./audit');
 const config = require('../config');
 
 Router.get('/api', (req, res) => res.status(200).json({
@@ -22,6 +23,7 @@ Router.use('/api/user', userRouter);
 Router.use('/api/events', eventsRouter);
 Router.use('/api/club', clubRouter);
 Router.use('/api/notifications', notificationsRouter);
+Router.use('/api/audit', auditRouter);
 
 // Exporting Router
 module.exports = Router;

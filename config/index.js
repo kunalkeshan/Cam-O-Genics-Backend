@@ -38,6 +38,8 @@ const configuration = {
     AUTH_ROLES: ['ADMIN', 'PRESIDENT', 'SECRETARY', 'ALUMNI', 'MEMBER'],
     GITHUB_URL: 'https://github.com/kunalkeshan/Cam-O-Genics-Backend',
     NATIVE_GITHUB_URL: 'https://github.com/surendar-pd/Cam-O-Genics-Native-App',
+    SERVER_GITHUB_API_URL: '',
+    NATIVE_GITHUB_API_URL: '',
 };
 
 // Exporting Configuration

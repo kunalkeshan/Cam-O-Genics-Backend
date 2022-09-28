@@ -6,6 +6,7 @@
 const jwt = require('jsonwebtoken');
 const authMailer = require('../mail/auth');
 const User = require('../models/User');
+const Audit = require('../models/Audit');
 const otpUtil = require('../utils/otp');
 const { ApiError } = require('../utils/custom');
 const { JWT_SECRET } = require('../config');
@@ -93,6 +94,7 @@ AuthController.loginUser = async (req, res, next) => {
         if (!isValidPassword) throw new ApiError({ message: 'auth/invalid-password', statusCode: 401 });
 
         loginUser = await loginUser.sanitize();
+        Audit.create({ for: 'LOGIN', userId: loginUser.id });
 
         return res.status(200).json({
             message: 'auth/user-login-successful',
@@ -119,6 +121,7 @@ AuthController.forgotPassword = async (req, res, next) => {
         const expiresIn = Date.now() + TenMins;
 
         authMailer.sendForgotPassword({ ...fpUser.toJSON(), otp });
+        Audit.create({ for: 'REQUEST', userId: fpUser.id, message: 'Requested to Change Password.' });
 
         return res.status(200).json({
             message: 'auth/otp-session-live',
@@ -168,6 +171,7 @@ AuthController.resetPassword = async (req, res, next) => {
         await user.save();
 
         authMailer.sendPasswordChanged(user.toJSON());
+        Audit.create({ for: 'UPDATE', userId: user.id, message: 'Password reset done.' });
 
         return res.status(200).json({
             message: 'auth/reset-password-successful',

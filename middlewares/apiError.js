@@ -4,6 +4,7 @@
 
 // Dependencies
 const { isProduction, GITHUB_URL } = require('../config');
+const Audit = require('../models/Audit');
 const { ApiError } = require('../utils/custom');
 
 /**
@@ -20,12 +21,14 @@ const errorHandler = (err, req, res, next) => {
             success: false,
         });
     }
+    Audit.create({ for: 'ISE', data: err.toString() });
     return res.status(500).json({
         ...(!isProduction && { error: err }),
         message: 'app/internal-server-error',
         data: {
             instruction: `Something went wrong, we're really sorry for the inconvenience.
-            You can try again in sometime, or if the issue persists, head over to ${GITHUB_URL} and open up an issue!`,
+            Project maintainers have been updated and you can try again in sometime, or if the issue persists, 
+            head over to ${GITHUB_URL} and open up an issue!`,
         },
         success: false,
     });
