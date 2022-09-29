@@ -40,6 +40,7 @@ const configuration = {
     NATIVE_GITHUB_URL: 'https://github.com/surendar-pd/Cam-O-Genics-Native-App',
     SERVER_GITHUB_API_URL: '',
     NATIVE_GITHUB_API_URL: '',
+    ERROR_API_KEY: process.env.ERROR_API_KEY,
 };
 
 // Exporting Configuration

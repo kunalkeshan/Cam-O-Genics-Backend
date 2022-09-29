@@ -1,0 +1,15 @@
+<mjml>
+	<mj-head>
+		<mj-title>Internal Server Error @CamOGenics</mj-title>
+	</mj-head>
+	<mj-body>
+		<mj-section>
+			<mj-column width="100%">
+				<mj-text>
+					Application faced an internal server error at {{date}}.
+					Error faced was: {{appError}}
+				</mj-text>
+			</mj-column>
+		</mj-section>
+	</mj-body>
+</mjml>

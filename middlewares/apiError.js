@@ -6,6 +6,7 @@
 const { isProduction, GITHUB_URL } = require('../config');
 const Audit = require('../models/Audit');
 const { ApiError } = require('../utils/custom');
+const appMailer = require('../mail/app');
 
 /**
  * @description Express error handling middleware
@@ -21,7 +22,10 @@ const errorHandler = (err, req, res, next) => {
             success: false,
         });
     }
-    Audit.create({ for: 'ISE', data: err.toString() });
+    // Log the Error to DB
+    Audit.create({ for: 'ISE', message: err });
+    // Send error report to maintainer
+    appMailer.sendIseMail({ appError: err });
     return res.status(500).json({
         ...(!isProduction && { error: err }),
         message: 'app/internal-server-error',

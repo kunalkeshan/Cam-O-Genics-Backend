@@ -11,6 +11,7 @@ const clubRouter = require('./club');
 const notificationsRouter = require('./notifications');
 const auditRouter = require('./audit');
 const config = require('../config');
+const { ApiError } = require('../utils/custom');
 
 Router.get('/api', (req, res) => res.status(200).json({
     message: `Welcome to the CamOGenics API! To learn more about the API, head over to "${config.GITHUB_URL}".`,
@@ -24,6 +25,15 @@ Router.use('/api/events', eventsRouter);
 Router.use('/api/club', clubRouter);
 Router.use('/api/notifications', notificationsRouter);
 Router.use('/api/audit', auditRouter);
+
+Router.get('/api/error', (req, res, next) => {
+    try {
+        if (req.query.key !== config.ERROR_API_KEY) throw new ApiError({ message: 'Invalid API Key', statusCode: 403 });
+        throw new Error('Custom API Error Dispatched');
+    } catch (error) {
+        return next(error);
+    }
+});
 
 // Exporting Router
 module.exports = Router;
