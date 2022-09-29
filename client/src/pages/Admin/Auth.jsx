@@ -21,42 +21,46 @@ const theme = createTheme();
 const Auth = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [user, setUser] = useState('');
-    const [password, setPassword] = useState('');
+    const [text, setText] = useState({
+        user: '',
+        password: '',
+    })
     const [error, setError] = useState({
-        password: {
-            visible: false,
-            message: '',
-        },
-        user: {
-            visible: false,
-            message: '',
-        }
+        for: '',
+        message: '',
     })
 
     const handleUserLogin = async (e) => {
         e.preventDefault();
         try {
             dispatch(showLoading(true));
-            const response = await server({ url: '/api/auth/login', method: 'post', data: { user: user.toUpperCase(), password } })
+            const response = await server({ url: '/api/auth/login', method: 'post', data: { ...text } })
+            if (!response.data.loginUser.authRoles.includes('ADMIN')) {
+                dispatch(showSnackbar({ severity: 'error', message: 'Only Admins can login. You do not have access.' }))
+            }
             dispatch(loginUser(response.data.loginUser));
             navigate('/admin/dashboard');
-        } catch (error) {
-            console.log(error);
-            // if (data.message === "app/request-validation-error") {
-            //     if (data.data.type === "alternatives.match") {
-            //         setError(data.data.path[0])
-            //     }else if (data.data.type === "string.empty") {
-            //         setError(data.data.path[0])
-            //     }
-            // }else if (data.message === "auth/account-does-not-exist"){
-            //     setModalVisible(true)
-            // }else if (data.message === "auth/invalid-password"){
-            //     setError("password")
-            // }
+        } catch (err) {
+            const { data } = err.data;
+            if (err.data.message === "app/request-validation-error") {
+                if (data.type === "alternatives.match") {
+                    setError((prev) => { return { ...prev, for: data.path[0], message: 'Invalid ID or Email' } });
+                } else if (data.type === "string.empty") {
+                    setError((prev) => { return { ...prev, for: data.path[0], message: 'Cannot be empty!' } });
+                }
+            } else if (err.data.message === "auth/account-does-not-exist") {
+                dispatch(showSnackbar({ severity: 'error', message: 'Account does not exist!' }))
+            } else if (err.data.message === "auth/invalid-password") {
+                setError((prev) => { return { ...prev, for: 'password', message: 'Invalid Password!' } })
+            }
         } finally {
             dispatch(showLoading(false));
         }
+    }
+
+    const handleInput = (field) => (e) => {
+        setText((prev) => { return { ...prev, [field]: e.target.value } });
+        setError({ for: '', message: '' });
     }
 
     return (
@@ -102,7 +106,9 @@ const Auth = () => {
                                 label="COG ID, Email, or Phone"
                                 autoComplete="off"
                                 autoFocus
-                                onChange={(e) => setUser(e.target.value)}
+                                onChange={handleInput('user')}
+                                error={error.for === 'user'}
+                                helperText={error.for === 'user' && error.message}
                             />
                             <TextField
                                 margin="normal"
@@ -112,7 +118,9 @@ const Auth = () => {
                                 type="password"
                                 id="password"
                                 autoComplete="off"
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={handleInput('password')}
+                                error={error.for === 'password'}
+                                helperText={error.for === 'password' && error.message}
                             />
                             <Button
                                 type="submit"

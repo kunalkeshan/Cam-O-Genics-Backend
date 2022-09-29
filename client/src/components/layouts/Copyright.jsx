@@ -9,7 +9,7 @@ import { PROJECT_MAINTAINERS, SERVER_GITHUB_URL } from "../../data/constants";
 
 function Copyright(props) {
     return (
-        <Typography variant="body2" color="text.secondary" align="center" mt={8} {...props}>
+        <Typography variant="body2" color="text.secondary" align="center" mt={8} {...props} component='div'>
             <Typography variant="caption" component='p'>
                 Made with ☕+🧠 by <Link color="inherit" href={PROJECT_MAINTAINERS.Kunal.twitter} target="_blank">Kunal Keshan</Link>
                 {' '} and <Link color="inherit" href={PROJECT_MAINTAINERS.Surendar.twitter} target="_blank">Surendar PD</Link>.

@@ -22,7 +22,7 @@ const server = async (options, auth = false) => {
     };
     if (auth) {
         const user = getUserFromStorage();
-        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${user?.token || ''}`;
+        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${user?.token ?? ''}`;
     }
     try {
         const response = await axiosInstance(options);

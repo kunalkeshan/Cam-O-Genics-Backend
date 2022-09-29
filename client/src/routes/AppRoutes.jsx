@@ -36,11 +36,11 @@ const AppRoutes = () => {
     const { user } = useSelector((state) => state.user);
 
     const Protected = ({ Page }) => {
-        return user ? <Page /> : <Navigate to='/admin/auth' />;
+        return (user && user?.authRole?.includes('ADMIN')) ? <Page /> : <Navigate to='/admin/auth' />;
     };
 
     const Authenticated = ({ Page }) => {
-        !user ? <Page /> : <Navigate to='/admin/dashboard' />
+        return (user && user?.authRole?.includes('ADMIN')) ? <Navigate to='/admin/dashboard' /> : <Page />
     }
 
     return (
