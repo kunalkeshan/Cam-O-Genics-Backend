@@ -34,8 +34,8 @@ eventMailer.sendNewEventEmail = async ({ emailList, event }) => {
             subject: `CamOGenics invites you to ${event.title}!`,
             icalEvent: {
                 filename: 'invite.ics',
-                method: 'REQUEST',
-                content: Buffer.from(event.ical),
+                method: 'PUBLISH',
+                content: event.ical,
             },
             html,
         };

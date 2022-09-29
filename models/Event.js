@@ -6,16 +6,8 @@
 // Dependencies
 const { Schema, model } = require('mongoose');
 const { format } = require('date-fns');
-const { ICalCalendar } = require('ical-generator');
 const ics = require('ics');
-const { getVtimezoneComponent } = require('@touch4it/ical-timezones');
 const { MAIL_CONFIG } = require('../config');
-
-const calendar = new ICalCalendar();
-calendar.timezone({
-    name: 'Asia/Calcutta',
-    generator: getVtimezoneComponent,
-});
 
 // Event Schema
 const EventSchema = new Schema({
@@ -83,29 +75,33 @@ EventSchema.methods.sanitize = async function () {
     await this.populate('createdBy lastUpdatedBy.user', 'fullName officialEmail defaultAvatar avatar id');
     const event = this.toJSON();
 
-    event.ical = calendar.createEvent({
-        timezone: 'Asia/Calcutta',
-        start: event.startDate,
-        end: event.endDate,
-        allDay: true,
+    const startDate = new Date(event.startDate);
+    const endDate = new Date(event.endDate);
+    const createdDate = new Date(event.createdAt);
+
+    const startDateArray = [startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), startDate.getHours(), startDate.getMinutes()];
+    const endDateArray = [endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), endDate.getHours(), endDate.getMinutes()];
+    const createdDateArray = [createdDate.getFullYear(), createdDate.getMonth(), createdDate.getDate(), createdDate.getHours(), createdDate.getMinutes()];
+
+    const ical = {
+        // timezone: 'Asia/Calcutta',
+        start: startDateArray,
+        end: endDateArray,
+        // allDay: true,
         status: 'CONFIRMED',
-        busystatus: 'BUSY',
-        created: event.createdAt,
-        summary: event.title,
+        busyStatus: 'BUSY',
+        created: createdDateArray,
+        title: event.title,
         description: event.description,
-        method: 'REQUEST',
-        location: {
-            title: event.locationName,
-            geo: {
-                lat: event.location.coordinates[0],
-                lon: event.location.coordinates[1],
-            },
+        location: event.locationName,
+        geo: {
+            lat: event.location.coordinates[0],
+            lon: event.location.coordinates[1],
         },
         organizer: { name: 'CamOGenics Community', email: MAIL_CONFIG.email },
-    });
+    };
 
-    event.ical = ics.createEvent(event.ical);
-    console.log(event.ical);
+    event.ical = ics.createEvent(ical).value;
 
     event.createdAt = format(new Date(event.createdAt), 'PPP');
     event.updatedAt = format(new Date(event.updatedAt), 'PPP');
