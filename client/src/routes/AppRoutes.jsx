@@ -18,6 +18,9 @@ const TermsAndConditions = lazy(() => import('../pages/TermsAndConditions'));
 const Events = lazy(() => import('../pages/Events'));
 const Admin = lazy(() => import('../pages/Admin/Admin'));
 const Auth = lazy(() => import('../pages/Admin/Auth'));
+const ForgotPassword = lazy(() => import('../pages/Admin/ForgotPassword'));
+const VerifyOtp = lazy(() => import('../pages/Admin/VerifyOtp'));
+const ResetPassword = lazy(() => import('../pages/Admin/ResetPassword'));
 const Dashboard = lazy(() => import('../pages/Admin/Dashboard/Dashboard'));
 const Main = lazy(() => import('../pages/Admin/Dashboard/Main'));
 const Profile = lazy(() => import('../pages/Admin/Dashboard/Profile'));
@@ -31,9 +34,13 @@ const Page404 = lazy(() => import('../pages/404'));
 const AppRoutes = () => {
 
     const { user } = useSelector((state) => state.user);
-    console.log(user);
-    const Protected = ({ children }) => {
-        return user ? { children } : <Navigate to='/admin/auth' />;
+
+    const Protected = ({ Page }) => {
+        return user ? <Page /> : <Navigate to='/admin/auth' />;
+    };
+
+    const Authenticated = ({ Page }) => {
+        !user ? <Page /> : <Navigate to='/admin/dashboard' />
     }
 
     return (
@@ -49,8 +56,11 @@ const AppRoutes = () => {
                 </Route>
                 <Route path='/admin' element={<Admin />}>
                     <Route index element={<Navigate to='/admin/auth' />} />
-                    <Route path='auth' element={!user ? <Auth /> : <Navigate to='/admin/dashboard' />} />
-                    <Route path='dashboard' element={<Protected><Dashboard /></Protected>}>
+                    <Route path='auth' element={<Authenticated Page={Auth} />} />
+                    <Route path='forgot-password' element={<Authenticated Page={ForgotPassword} />} />
+                    <Route path='verify-otp' element={<Authenticated Page={VerifyOtp} />} />
+                    <Route path='reset-password' element={<Authenticated Page={ResetPassword} />} />
+                    <Route path='dashboard' element={<Protected Page={Dashboard} />}>
                         <Route index element={<Main />} />
                         <Route path='me' element={<Profile />} />
                         <Route path='community' element={<Community />} />
@@ -59,6 +69,7 @@ const AppRoutes = () => {
                         <Route path='audit' element={<Audit />} />
                         <Route path='notifications' element={<Notifications />} />
                     </Route>
+                    <Route path='*' element={<Navigate to='/not-found' />} />
                 </Route>
                 <Route path='/not-found' element={<Page404 />} />
                 <Route path='*' element={<Navigate to='/not-found' />} />
