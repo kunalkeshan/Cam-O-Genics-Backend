@@ -30,9 +30,7 @@ const ForgotPassword = () => {
             const response = await server({ url: '/api/auth/forgot-password', method: 'post', data: { user } });
             console.log(response)
             dispatch(showSnackbar({ message: 'An OTP has been sent to your account.', severity: 'success' }));
-            setTimeout(() => {
-                navigate('/admin/verify-otp', { state: { ...response.data } })
-            }, 1500);
+            navigate('/admin/verify-otp', { state: { ...response.data, user } })
         } catch (err) {
             console.log(err);
             const { data } = err.data;

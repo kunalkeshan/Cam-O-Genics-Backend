@@ -29,6 +29,7 @@ const AdminEvents = lazy(() => import('../pages/Admin/Dashboard/Events'));
 const Club = lazy(() => import('../pages/Admin/Dashboard/Club'));
 const Notifications = lazy(() => import('../pages/Admin/Dashboard/Notifications'));
 const Audit = lazy(() => import('../pages/Admin/Dashboard/Audit'));
+const Settings = lazy(() => import('../pages/Admin/Dashboard/Settings'));
 const Page404 = lazy(() => import('../pages/404'));
 
 const AppRoutes = () => {
@@ -36,11 +37,11 @@ const AppRoutes = () => {
     const { user } = useSelector((state) => state.user);
 
     const Protected = ({ Page }) => {
-        return (user && user?.authRole?.includes('ADMIN')) ? <Page /> : <Navigate to='/admin/auth' />;
+        return (user && user?.authRole === 'ADMIN') ? <Page /> : <Navigate to='/admin/auth' />;
     };
 
     const Authenticated = ({ Page }) => {
-        return (user && user?.authRole?.includes('ADMIN')) ? <Navigate to='/admin/dashboard' /> : <Page />
+        return (user && user?.authRole === 'ADMIN') ? <Navigate to='/admin/dashboard' /> : <Page />
     }
 
     return (
@@ -66,8 +67,10 @@ const AppRoutes = () => {
                         <Route path='community' element={<Community />} />
                         <Route path='events' element={<AdminEvents />} />
                         <Route path='club' element={<Club />} />
-                        <Route path='audit' element={<Audit />} />
+                        <Route path='audits' element={<Audit />} />
                         <Route path='notifications' element={<Notifications />} />
+                        <Route path='settings' element={<Settings />} />
+                        <Route path='*' element={<Navigate to='/not-found' />} />
                     </Route>
                     <Route path='*' element={<Navigate to='/not-found' />} />
                 </Route>

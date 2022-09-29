@@ -3,7 +3,7 @@
  */
 
 // Dependencies
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import server from '../../utils/axios';
@@ -12,6 +12,7 @@ import { MuiOtpInput } from 'mui-one-time-password-input'
 import { Grid, CssBaseline, Box, Paper, Avatar, Typography, TextField, Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import KeyIcon from '@mui/icons-material/Key';
+import { formatDistance } from 'date-fns';
 
 import { showSnackbar, showLoading } from '../../store/features/app';
 import Copyright from '../../components/layouts/Copyright';
@@ -23,6 +24,7 @@ const VerifyOtp = () => {
     const navigate = useNavigate();
     const { state } = useLocation();
     const [otp, setOtp] = useState('');
+    const [currentTime, setCurrentTime] = useState(new Date());
 
     const handleVerifyOtp = (location) => async (e) => { };
 
@@ -34,6 +36,19 @@ const VerifyOtp = () => {
         }
         return true;
     }
+
+    const otpExpireTime = useMemo(() => {
+        return formatDistance(new Date(state.expiresIn), currentTime, { includeSeconds: true, addSuffix: true })
+    }, [currentTime, state]);
+
+    console.log(otpExpireTime)
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentTime(new Date())
+        }, 1000)
+        return () => clearInterval(intervalId)
+    }, [])
 
     return (
         <ThemeProvider theme={theme}>
@@ -88,12 +103,10 @@ const VerifyOtp = () => {
                             >
                                 Verify OTP
                             </Button>
-                            <Grid container>
-                                {/* <Grid item>
-                                    <Link to='/admin/auth'>
-                                        {"Remember your password? Sign In"}
-                                    </Link>
-                                </Grid> */}
+                            <Grid container mt={3}>
+                                <Grid item>
+                                    <Typography variant='caption'>OTP expires/d {otpExpireTime}</Typography>
+                                </Grid>
                             </Grid>
                             <Copyright sx={{ mt: 5 }} />
                         </Box>

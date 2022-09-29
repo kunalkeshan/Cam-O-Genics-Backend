@@ -35,7 +35,7 @@ const Auth = () => {
         try {
             dispatch(showLoading(true));
             const response = await server({ url: '/api/auth/login', method: 'post', data: { ...text } })
-            if (!response.data.loginUser.authRoles.includes('ADMIN')) {
+            if (!response.data.loginUser.authRole === 'ADMIN') {
                 dispatch(showSnackbar({ severity: 'error', message: 'Only Admins can login. You do not have access.' }))
             }
             dispatch(loginUser(response.data.loginUser));

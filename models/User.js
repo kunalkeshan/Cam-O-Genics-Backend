@@ -7,6 +7,7 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 const { format } = require('date-fns');
 const Audit = require('./Audit');
 const { UserNotifications } = require('./Notifications');
@@ -49,6 +50,8 @@ const UserSchema = new Schema({
     },
     defaultAvatar: String,
     avatar: String,
+    defaultCover: String,
+    cover: String,
     address: String,
     headline: String,
     about: String,
@@ -143,6 +146,11 @@ UserSchema.methods.generateDefaultAvatar = async function () {
     this.defaultAvatar = `https://avatars.dicebear.com/api/initials/${fullNameSpaceAdjusted}.png`;
 };
 
+UserSchema.methods.generateDefaultCover = async function () {
+    const unsplashImage = await axios.get('https://source.unsplash.com/1600x450/');
+    this.defaultCover = unsplashImage.data.url;
+};
+
 UserSchema.methods.sanitize = async function () {
     await this.populate('communityIdentities');
     const user = this.toJSON();
@@ -176,6 +184,7 @@ UserSchema.pre('save', async function (next) {
         }
         if (this.isNew) {
             await this.generateDefaultAvatar();
+            await this.generateDefaultCover();
         }
         // eslint-disable-next-line
     } catch (_) { }
