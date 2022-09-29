@@ -24,14 +24,19 @@ eventMailer.sendNewEventEmail = async ({ emailList, event }) => {
         },
         template: {
             engine: 'handlebars',
-            vars: { ...event },
+            vars: { title: event.title },
         },
     });
     return new Promise((resolve) => {
         const mailOptions = {
             to: MAIL_CONFIG.email,
             bcc: emailList,
-            subject: '',
+            subject: `CamOGenics invites you to ${event.title}!`,
+            icalEvent: {
+                filename: 'invite.ics',
+                method: 'REQUEST',
+                content: Buffer.from(event.ical),
+            },
             html,
         };
         // TODO: Logging for email errors required

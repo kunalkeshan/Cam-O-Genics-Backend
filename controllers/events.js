@@ -32,7 +32,8 @@ EventsController.createNewEvent = async (req, res, next) => {
         event = await event.sanitize();
 
         if (req.body.sendEmails) {
-            const userEmails = await Users.find({ 'settings.emails.events': true }).select('officialEmail').lean();
+            let userEmails = await Users.find({ 'settings.emails.events': true }).select({ officialEmail: 1, _id: 0 }).lean();
+            userEmails = userEmails.map((email) => email.officialEmail);
             sendNewEventEmail({ emailList: userEmails, event });
         }
 

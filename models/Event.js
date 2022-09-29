@@ -7,7 +7,9 @@
 const { Schema, model } = require('mongoose');
 const { format } = require('date-fns');
 const { ICalCalendar } = require('ical-generator');
+const ics = require('ics');
 const { getVtimezoneComponent } = require('@touch4it/ical-timezones');
+const { MAIL_CONFIG } = require('../config');
 
 const calendar = new ICalCalendar();
 calendar.timezone({
@@ -46,9 +48,21 @@ const EventSchema = new Schema({
         enum: ['ONLINE', 'OFFLINE'],
         required: true,
     },
-    location: String,
-    link: String,
+    meetLink: String,
+    website: String,
     cover: String,
+    locationName: { type: String, default: 'SRM Ramapuram' },
+    location: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            default: 'Point',
+        },
+        coordinates: {
+            type: [Number],
+            default: [13.032267552501912, 80.1807374965776],
+        },
+    },
     startDate: {
         type: Date,
         required: true,
@@ -73,8 +87,25 @@ EventSchema.methods.sanitize = async function () {
         timezone: 'Asia/Calcutta',
         start: event.startDate,
         end: event.endDate,
+        allDay: true,
         status: 'CONFIRMED',
+        busystatus: 'BUSY',
+        created: event.createdAt,
+        summary: event.title,
+        description: event.description,
+        method: 'REQUEST',
+        location: {
+            title: event.locationName,
+            geo: {
+                lat: event.location.coordinates[0],
+                lon: event.location.coordinates[1],
+            },
+        },
+        organizer: { name: 'CamOGenics Community', email: MAIL_CONFIG.email },
     });
+
+    event.ical = ics.createEvent(event.ical);
+    console.log(event.ical);
 
     event.createdAt = format(new Date(event.createdAt), 'PPP');
     event.updatedAt = format(new Date(event.updatedAt), 'PPP');
