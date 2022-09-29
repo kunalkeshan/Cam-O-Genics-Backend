@@ -58,7 +58,7 @@ Mostly has only read-only access. Can update their own profile and open issues, 
 
 ## Endpoints Documentation
 
-Refer to the [CamOGenics Backend App's](/wiki) Wiki to learn more about the application endpoints.
+Refer to the [CamOGenics Backend App's Wiki](https://github.com/kunalkeshan/Cam-O-Genics-Backend/wiki) to learn more about the application endpoints.
 
 ## Contributing
 
