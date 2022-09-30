@@ -63,6 +63,14 @@ const EventSchema = new Schema({
         type: Date,
         required: true,
     },
+    registerStartDate: {
+        type: Date,
+        required: true,
+    },
+    registerEndDate: {
+        type: Date,
+        required: true,
+    },
 }, {
     timestamps: true,
     skipVersioning: true,

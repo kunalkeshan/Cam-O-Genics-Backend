@@ -14,10 +14,12 @@ const Home = () => {
 
     useEffect(() => {
         window.addEventListener('keyup', (event) => {
-            // . - Period to open up admin app
-            if (event.key === '.') {
-                navigate('/admin');
-            };
+            if (!window.location.pathname.includes('admin')) {
+                // . - Period to open up admin app
+                if (event.key === '.') {
+                    navigate('/admin');
+                };
+            }
         });
         return () => window.removeEventListener('keyup', () => null)
     }, [navigate]);

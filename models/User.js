@@ -70,7 +70,7 @@ const UserSchema = new Schema({
     authRole: {
         type: String,
         enum: AUTH_ROLES,
-        default: 'MEMBER',
+        default: '',
     },
     communityIdentities: [{
         type: [Schema.Types.ObjectId],

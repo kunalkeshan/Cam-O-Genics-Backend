@@ -33,7 +33,12 @@ AuthController.signupClubMember = async (req, res, next) => {
         if (user) throw new ApiError({ message: 'auth/account-already-exists', statusCode: 409 });
 
         user = new User({
-            fullName, cogcId, password, officialEmail: email, memberRole: 'COG',
+            fullName,
+            cogcId,
+            password,
+            officialEmail: email,
+            memberRole: 'COG',
+            authRole: 'MEMBER',
         });
         await user.save();
 
@@ -63,7 +68,11 @@ AuthController.signupCommunityMember = async (req, res, next) => {
         if (user) throw new ApiError({ message: 'auth/account-already-exists', statusCode: 409 });
 
         user = new User({
-            fullName, registerNo, password, officialEmail: email, memberRole: 'COGC',
+            fullName,
+            registerNo,
+            password,
+            officialEmail: email,
+            memberRole: 'COGC',
         });
         await user.save();
 
