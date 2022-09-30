@@ -18,7 +18,6 @@ const Home = () => {
             if (event.key === '.') {
                 navigate('/admin');
             };
-            console.log(event)
         });
         return () => window.removeEventListener('keyup', () => null)
     }, [navigate]);
