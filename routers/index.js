@@ -28,7 +28,7 @@ Router.use('/api/audit', auditRouter);
 
 Router.get('/api/error', (req, res, next) => {
     try {
-        if (req.query.key !== config.ERROR_API_KEY) throw new ApiError({ message: 'Invalid API Key', statusCode: 403 });
+        if (!req.query.key && req.query.key !== config.ERROR_API_KEY) throw new ApiError({ message: 'Invalid API Key', statusCode: 403 });
         throw new Error('Custom API Error Dispatched');
     } catch (error) {
         return next(error);

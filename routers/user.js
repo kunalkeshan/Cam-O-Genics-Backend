@@ -16,6 +16,8 @@ Router.use(checkJwt);
  * ---------------------------
 */
 
+Router.get('/cog/client', userController.getClubMembersForClient);
+
 /** --------------------------
  * AUTHENTICATED ROUTES
  * ---------------------------

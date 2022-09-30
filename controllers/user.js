@@ -14,6 +14,25 @@ const UserController = {};
  * ---------------------------
 */
 
+/**
+ * @description Fetch list of cog members who are not admin
+ * @api /api/user/cog/client
+ * @method GET
+ */
+UserController.getClubMembersForClient = async (req, res, next) => {
+    try {
+        const members = await User.find({ memberRole: 'COG', authRole: { $ne: 'ADMIN' } })
+            .select('id fullName defaultAvatar avatar links headline about').populate('communityIdentities', 'role').lean();
+        return res.status(200).json({
+            message: 'user/cog-users-for-client',
+            data: { members },
+            success: true,
+        });
+    } catch (error) {
+        return next(error);
+    }
+};
+
 /** --------------------------
  * AUTHENTICATED CONTROLLERS
  * ---------------------------
