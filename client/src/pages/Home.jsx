@@ -2,27 +2,17 @@
  * Home Page
  */
 
-import React, { useEffect } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import React from 'react'
+import { Outlet } from 'react-router-dom'
 
 import Navbar from '../components/layouts/Navbar'
 import Footer from '../components/layouts/Footer'
+import useKeyboardShortcuts from '../hooks/useKeyboardShortcuts'
 
 
 const Home = () => {
-    const navigate = useNavigate();
 
-    useEffect(() => {
-        window.addEventListener('keyup', (event) => {
-            if (!window.location.pathname.includes('admin')) {
-                // . - Period to open up admin app
-                if (event.key === '.') {
-                    navigate('/admin');
-                };
-            }
-        });
-        return () => window.removeEventListener('keyup', () => null)
-    }, [navigate]);
+    useKeyboardShortcuts();
 
     return (
         <div>
